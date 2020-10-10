@@ -1,3 +1,8 @@
-import UIKit
+import Foundation
 
-var str = "Hello, playground"
+// protocolとは
+// 議定書　=>  protocol
+
+
+
+
