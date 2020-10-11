@@ -230,3 +230,235 @@ for _ in 1...5 {
 //}
 
 
+protocol Calculation {
+    var num1: Int { set get }
+    var num2: Int { set get }
+    func calc() -> Int
+}
+
+struct Add: Calculation {
+    var num1: Int
+    var num2: Int
+    func calc() -> Int {
+        return num1 + num2
+    }
+}
+
+let add = Add(num1: 1, num2: 2)
+print(add.calc())
+
+// デフォルト実装
+extension Calculation {
+    func calc() -> Int {
+        return 0
+    }
+}
+// 値型
+struct NoCalc: Calculation {
+    var num1: Int
+    var num2: Int
+}
+
+let not = NoCalc(num1: 1, num2: 3)
+//print(not.calc())
+
+
+print("/////////////////////////")
+// protocol-oriented-Programming
+// https://heart-of-swift.github.io/protocol-oriented-programming/
+
+protocol Animal {
+    func foo() -> Int
+}
+
+
+// return 省略
+struct Cat: Animal {
+    func foo() -> Int {
+        2
+    }
+}
+
+struct Dog: Animal {
+    func foo() -> Int {
+        1
+    }
+}
+
+let animal: Animal = Bool.random() ? Cat() : Dog()
+print(animal.foo())
+// オブジェクト指向プログラミング でよく見られるポリモーフィズムです。
+// しかし、 Swiftにおいてこのようなプロトコルの使い方は必ずしも適切ではありません。
+// なぜ適切でないのか、どのようにプロトコルを使えば良いのかというのが本節のテーマです。
+
+// Existential Type と Existential Container
+
+
+struct Cat2: Animal {
+    var value: UInt8 = 2 // 1bit
+    func foo() -> Int { 2 }
+}
+
+struct Dog2: Animal {
+    var value: Int32 = 4 // 4bit
+    func foo() -> Int { 1 }
+}
+
+// Cat と Dog は 値型 なので、変数・定数にはそれらのインスタンスが直接格納されます。
+// そのため、 Cat 型変数は 1 バイトの、 Dog 型変数は 4 バイトの領域を必要とします。
+
+let cat2: Cat2 = Cat2() // 1bit
+let dog2: Dog2 = Dog2() // 4bit
+
+let animal2: Animal = Bool.random() ? cat2 : dog2 // 何バイト?
+print(MemoryLayout.size(ofValue: animal2))
+
+
+// https://matsuokah.hateblo.jp/entry/2017/08/22/070000
+
+// Class からProtocolにリファクタ
+
+/*
+ - オブジェクト指向の利点
+ 　- カプセル化
+ 　- アクセスコントロール
+ 　- 抽象化
+ 　- 名前空間
+ 　- Expressive Syntax
+ 　- 拡張性
+ これらは型の特徴であり、オブジェクト指向ではclassによって上記を実現している。
+ また、classでは継承を用いることで親クラスのメソッドを共有したり、オーバーライドによって振る舞いを変えるということ実現している。
+ しかし、これらの特徴はstructとenumで実現することが可能。
+*/
+
+// Classの問題点
+
+/*
+ - 暗黙的オブジェクトの共有
+ classは参照であるため、プロパティの中身が書き換わると参照しているすべての箇所に影響が及ぶ。即ち、
+ その変更を考慮した実装による複雑性が生まれているということ。
+
+ - 継承関係
+ Swiftを含め、多くの言語ではスーパークラスを１つしか持てないため、
+ 親を慎重に選ぶという作業が発生している。
+ また、継承した後はそのクラスの継承先にも影響が及ぶので後から継承元を変えるという作業が非常に困難になる。
+
+ - 型関係の消失
+ オブジェクト指向をSwiftで実現しようとすると、ワークアラウンドが必要になる
+ */
+
+/// データクラスをキャッシュするクラスをCacheとし、更新のためにmergePropertyというメソッドを用意
+
+class Cache {
+    func key() -> String {
+        fatalError("Please override this function")
+    }
+
+    func margeProperty(other: Cache) {
+        fatalError("Please override this function")
+    }
+}
+
+class FuelCar: Cache {
+
+    var fuel: Int = 0
+    var id: String
+
+    init(id: String) {
+        self.id = id
+    }
+
+    override func key() -> String {
+        return String(describing: FuelCar.self) + self.id
+    }
+
+    override func margeProperty(other: Cache) {
+        guard let car = other as? FuelCar else { return }
+        fuel = car.fuel
+    }
+}
+
+var memoryCache = [String: Cache]()
+/*発生しているワークアラウンド
+抽象関数を実現するためにスーパークラスでfatalErrorを使っている
+各クラスの実装でランタイムのキャストを行っている
+もし、FuelCar,BatteryCarで共通処理を実装するCarというスーパークラスを定義したくなったら、
+CacheFuelCarなどとデータクラスを分けるような実装が必要になる
+*/
+
+
+typealias CacheKey = String
+
+class Cacheable {
+    func key() -> CacheKey {
+        fatalError("Please override this function")
+    }
+
+    func marge(other: Cacheable) {
+        fatalError("Please override this function")
+    }
+}
+
+class CacheStore<CachableValue: Cacheable> {
+    var cache = [CacheKey: CachableValue]()
+
+    func save(value: CachableValue) {
+        if let exist = cache[value.key()] {
+            exist.marge(other: value)
+            cache[value.key()] = exist
+            return
+        }
+        cache[value.key()] = value
+    }
+
+    func load(cacheable: CachableValue) -> CachableValue? {
+        return cache[cacheble.key()]
+    }
+}
+
+class Car: Cacheable {
+    var id: String
+    init(id: String) {
+        self.id = id
+    }
+}
+
+class FuelCar2: Car {
+    var fuelGallon: Int
+    init(id: String, fuelGallon: Int = 0) {
+        self.fuelGallon = fuelGallon
+        super.init(id: id)
+    }
+
+    override func key() -> CacheKey {
+        return id
+    }
+
+    override func marge(other: Cacheable) {
+        guard let fuelCar = other as? FuelCar2 else { return }
+        self.fuelGallon = fuelCar.fuelGallon
+    }
+}
+
+func print(cacheable: FuelCar2,store: CacheStore<FuelCar2>) {
+    print("fuelGallon: \(store.load(cacheable: cacheable)!.fuelGallon)")
+}
+
+var fuelCarCache = CacheStore<FuelCar2>()
+var car1 = FuelCar2(id: "car1", fuelGallon: 0)
+fuelCarCache.save(value: car1)
+
+print(cacheable: car1, store: fuelCarCache)
+// print: 0
+
+car1.fuelGallon = 10
+
+print(cacheable: car1, store: fuelCarCache)
+// print: 10
+
+fuelCarCache.save(value: car1)
+
+print(cacheable: car1, store: fuelCarCache)
+// print: 10
+
+
