@@ -412,7 +412,7 @@ class CacheStore<CachableValue: Cacheable> {
     }
 
     func load(cacheable: CachableValue) -> CachableValue? {
-        return cache[cacheble.key()]
+        return cache[cacheable.key()]
     }
 }
 
