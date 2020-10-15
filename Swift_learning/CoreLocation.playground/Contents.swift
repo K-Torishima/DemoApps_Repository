@@ -2,25 +2,35 @@ import UIKit
 import CoreLocation
 import PlaygroundSupport
 
-let locationManager = CLLocationManager()
 PlaygroundPage.current.needsIndefiniteExecution = true
 
-class GeoCoordinateDelegate: NSObject, CLLocationManagerDelegate {
 
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        let location = locations[0]
-        print("Most Recent Location: " + location.description)
-        print(location.coordinate.latitude)
-        print(location.coordinate.longitude)
+class LocationSample: NSObject, CLLocationManagerDelegate {
+
+    let locationManager = CLLocationManager()
+
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        let accuracy = manager.accuracyAuthorization
+        let status = manager.authorizationStatus
+        switch accuracy {
+        case .fullAccuracy:
+            print("正確")
+        case .reducedAccuracy:
+            print("曖昧")
+        default:
+            break
+        }
+
+        switch status {
+        case .authorizedAlways, .authorizedWhenInUse:
+            break
+        case .notDetermined, .denied, .restricted:
+            break
+        default:
+            break
+        }
     }
-
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print("Error while updating " + error.localizedDescription)
-    }
-
 }
 
-let geoCoordinateDelegate = GeoCoordinateDelegate()
-locationManager.delegate = geoCoordinateDelegate
-locationManager.desiredAccuracy = kCLLocationAccuracyBest
-locationManager.startUpdatingLocation()
+LocationSample()
+
