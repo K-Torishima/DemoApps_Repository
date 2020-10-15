@@ -34,3 +34,6 @@ class LocationSample: NSObject, CLLocationManagerDelegate {
 
 LocationSample()
 
+// UIKitの中にある
+// let a = kCGImagePropertyGPSLongitude
+
