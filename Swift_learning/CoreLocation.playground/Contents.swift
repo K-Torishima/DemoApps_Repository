@@ -4,7 +4,6 @@ import PlaygroundSupport
 
 PlaygroundPage.current.needsIndefiniteExecution = true
 
-
 class LocationSample: NSObject, CLLocationManagerDelegate {
 
     let locationManager = CLLocationManager()
