@@ -120,3 +120,6 @@ oder == ComparisonResult.orderedSame
 
 "abc".range(of: "bc")
 
+// Any
+// 任意の型を表す型
+
