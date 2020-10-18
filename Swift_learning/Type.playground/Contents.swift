@@ -52,3 +52,5 @@ r.isNaN // true
 
 let s: Double = Double.nan
 s.isNaN // true
+
+// 数値であっても型が違おうとCompileError
