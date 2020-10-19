@@ -1,65 +1,38 @@
 import Foundation
-import CoreLocation
-import CoreMotion
-import Photos
 
-let fruits = ["りんご": 100, "オレンジ": 80, "メロン": 700, "バナナ": 150, "パイナップル": 450]
+// Dictionary<key, Value>
 
-for (key, value) in fruits {
-    print("key: \(key),value: \(value)")
-}
-
-
-func test()  -> [String: Any] {
-    let sum = fruits
-    print(sum)
-    return sum
-}
-
-test()
+/*
+ Key と　Valueをもつ
+ キーはアクセス対象の識別に使用されるため一意でなければならない
+ 値は他のものと重複しても構わない
+ */
 
 
-var personInfo: Dictionary<String, Any> = ["name" :"torishima", "age" : 28]
+// 辞書リテラル
+let dictionary = ["a": 1, "b": 2]
 
-personInfo["sex"] = "man"
-print(personInfo)
-print(personInfo.keys)
-print(personInfo.values)
+// 型推論
 
-//for (key, val) in personInfo {
-//    print(key, val)
-//}
+let dic = ["a": 1, "b" : 2]
 
-personInfo.forEach { key, val in
-    print(key, val)
-}
+// 空
+let dic2: [String: Int] = [:]
 
-personInfo.map {
-    print($0.value)
-}
+// キーと値でできる型
+/*
+Dictionary型は　正式には
+ Dictionary<key, Hashable, Value>
+ Key型に指定できる型には制限がある
+ Hashableの部分は型制約といいkey型をHashableに準拠し型に制限している
+ Hashableに準拠した型は、その値をもとにハッシュ値を計算んできる
+ ハッシュ値とは
+ 元の値からアルゴリズムで算出されるInt型の値
+ key型がHashableに準拠している必要があるのはハッシュ値がキーの一意性の保証や探索などに必要あるため
 
-//  特定の機能を追加している where 型がwhere以下の条件を満たす場合のみ有効になる定義を追加するという構文になります。
+ Valueには型制限がない
+ [key: [key: type]]とかもできる
+ */
 
-extension Dictionary where Key == String, Value == String {
-    // 制約をすべて満たす場合にのみ有効となる定義
-    func addIfNew(key: String, value: String) {
-        print("これはextentionです. key: \(key), val: \(value)")
-    }
-}
-
-let dic: [String: String] = [:]
-dic.addIfNew(key: "testKey", value: "testValue")
-
-
-private extension Dictionary where Key == String, Value == Any {
-    // 制約をすべて満たす場合にのみ有効となる定義
-    init(coordinate: CLLocationCoordinate2D) {
-        // 順番変えている
-        self.init(dictionaryLiteral:
-                    (kCGImagePropertyGPSLatitudeRef as String, "N"),
-                  (kCGImagePropertyGPSLongitudeRef as String, "E"),
-                  (kCGImagePropertyGPSLatitude as String, NSNumber(value: coordinate.latitude as Double)),
-                  (kCGImagePropertyGPSLongitude as String, NSNumber(value: coordinate.longitude as Double))
-        )
-    }
-}
+let dic3 = ["even":[2, 4, 6, 8], "odd": [1, 3, 5, 7, 9]]
+print(dic3["even"]!)
