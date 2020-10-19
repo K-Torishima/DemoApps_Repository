@@ -38,7 +38,10 @@ personInfo.map {
     print($0.value)
 }
 
+//  特定の機能を追加している where 型がwhere以下の条件を満たす場合のみ有効になる定義を追加するという構文になります。
+
 extension Dictionary where Key == String, Value == String {
+    // 制約をすべて満たす場合にのみ有効となる定義
     func addIfNew(key: String, value: String) {
         print("これはextentionです. key: \(key), val: \(value)")
     }
@@ -49,6 +52,7 @@ dic.addIfNew(key: "testKey", value: "testValue")
 
 
 private extension Dictionary where Key == String, Value == Any {
+    // 制約をすべて満たす場合にのみ有効となる定義
     init(coordinate: CLLocationCoordinate2D) {
         // 順番変えている
         self.init(dictionaryLiteral:
@@ -59,48 +63,3 @@ private extension Dictionary where Key == String, Value == Any {
         )
     }
 }
-
-//private var locationManager: CLLocationManager!
-//
-////func gpsDictionary() -> NSDictionary? {
-////    guard let location = locationManager.location, CLLocationManager.locationServicesEnabled() else { return nil }
-////    let gps: NSMutableDictionary = NSMutableDictionary()
-////    gps.setValue("N", forKey: kCGImagePropertyGPSLatitudeRef as String)
-////    gps.setValue("E", forKey: kCGImagePropertyGPSLongitudeRef as String)
-////    gps.setValue(NSNumber(value: location.coordinate.latitude as Double), forKey: kCGImagePropertyGPSLatitude as String)
-////    gps.setValue(NSNumber(value: location.coordinate.longitude as Double), forKey: kCGImagePropertyGPSLongitude as String)
-////    return gps
-////}
-//
-//
-/////　OS14以降では正確な位置情報がOFFの場合、写真情報にGpsDataを載せない
-//func gpsDictionary() -> NSDictionary? {
-//    let gps: NSMutableDictionary = NSMutableDictionary()
-//    if #available(iOS 14.0, *) {
-//        switch locationManager.accuracyAuthorization {
-//        case .reducedAccuracy:
-//            break
-//        case .fullAccuracy:
-//            getGps()
-//        @unknown default:
-//            assertionFailure("@unknown default")
-//        }
-//    } else {
-//        getGps()
-//    }
-//    return gps
-//}
-//
-//private func getGps() -> [String : Any ] {
-//    //緯度:latitude
-//    //経度:longtitude
-////    guard let location = locationManager.location, CLLocationManager.locationServicesEnabled() else { return }
-////    let n = kCGImagePropertyGPSLatitudeRef
-////    let e = kCGImagePropertyGPSLongitudeRef
-//    let coordinate = CLLocationCoordinate2D()
-//    let dic = Dictionary(coordinate: coordinate)
-//
-//    return dic
-//}
-//
-//
