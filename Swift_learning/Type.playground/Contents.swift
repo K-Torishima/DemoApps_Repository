@@ -123,3 +123,119 @@ oder == ComparisonResult.orderedSame
 // Any
 // 任意の型を表す型
 
+let int: Any = 123
+// ＊＊＊＊＊＊　Anyの注意点　＊＊＊＊＊＊
+/*
+ Anyに変数や、定数を代入してしまうと元の型の情報が失われてしまうため、もとの方では可能だった操作ができなくなってしまう
+ Anyへの代入は値にたいする操作の幅を狭めてしまうため、可能な限りAny型への代入は避け、型の情報を保つことが望ましいでしょう。
+ */
+
+// タプル型
+// 複数の型をまとめて一つの型として扱う
+//
+var tuple: (Int, String)
+// 代入方法
+tuple = (1, "a")
+
+// 要素アクセス
+// - インデックスによるアクセス
+// - 要素名によるアクセス
+// - 代入によるアクセス
+
+// インデックスによるアクセス
+
+let tuple2 = (1, "a")
+let num = tuple2.0
+let str = tuple2.1
+
+// 要素名アクセス
+
+let tuple3 = (int: 1, string: "a")
+let numA = tuple3.int
+let strA = tuple3.string
+
+// 代入によるアクセス
+
+let numB: Int
+let strB: String
+
+(numB, strB) = (1, "a")
+
+numB
+strB
+
+// タプルで定数もかける、あまり使わなさそう
+let (intA, stringA) = (1, "a")
+intA
+stringA
+
+// Void型
+// 空　()
+// 関数の戻り値がないとか、クロージャーの戻り値なしとかに使う
+
+// キャスト
+// アップキャスト
+
+let any = "abc" as Any // Any型にアップキャスト
+
+// 右辺が左辺の型の上位ではない場合Errorになる
+// let int = "abc" as Int これはerrorになる
+
+// 暗黙的キャスト
+let abc: Any = "abc" // Stringから　Anyへの暗黙的なキャスト
+
+// ダウンキャスト
+/*
+ 階層関係のある型同士において、階層の上位となる抽象的な型を下位の具体的な方として扱う
+ ダウンキャストはコンパイル失敗する可能性もある
+ as? as!を使う
+
+ as! はフォースドキャストという
+ */
+
+let any1 = 1 as Any
+let int2 = any as? Int
+let str4 = any as? String
+
+let any2 = 1 as Any
+let int3 = any as! Int
+let str5 = any as! String // これは実行時errorになる
+
+// 基本的には　as?を使う　as!は失敗しないケースなどで使うと良いが、使わない方が良い
+
+// 値比較のためのプロトコル
+
+// Equatable
+// Comparable
+
+// Equatable
+/*
+同値性を検証するためのプロトコルである
+Equatableプロトコルに準拠(じゅんきょ)している型は
+ ==　で値の一致を確認
+ !=  で値の不一致を確認
+ Bool、Int、Float、Double、StringはすべてEquatableに準拠している
+
+ */
+let boolLeft = true
+let boolRight = true
+
+boolLeft == boolRight // true
+boolLeft != boolRight // false
+
+let intLeft = 12
+let intRight = 13
+
+intLeft == intRight // false
+intLeft != intRight // true
+
+// 他にもいろいろあるが省略
+
+// Comparable
+// < > <= とか使う
+// 値の大小とかを使って検証するプロトコルである
+// 
+
+
+
+
