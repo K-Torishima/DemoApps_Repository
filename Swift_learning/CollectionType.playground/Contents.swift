@@ -198,4 +198,28 @@ let map = a.map { val in
 map // [[1, 2], [4, 5], [7, 8]]
 // なぜ？　→ クロージャーが返す方がそのままシーケンスの要素となるため、二重になってしまう
 
+// compactMap
+// 要素を失敗する可能性のある処理を用いて変換する
+// Intに変換できるもののみクロージャーで実行され、それ以外は無視される
 
+let strings = ["abc", "123", "def", "456"]
+let integers = strings.compactMap { val in
+    Int(val)
+}
+integers // [123, 456]
+
+// reduce
+// 要素を一つにまとめる
+// 第一引数に初期値を指定し、第二引数に要素を結果に反映する処理を実行する
+// あらゆる型の値を返却できる
+
+ let arrayA = [1,2,3,4,5,6]
+let sum = arrayA.reduce(0, { result, element in
+    result + element
+})
+
+// 書き方はいろいろある
+let concat = arrayA.reduce("") { (res, element) in
+    res + String(element)
+}
+concat
