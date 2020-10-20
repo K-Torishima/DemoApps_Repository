@@ -135,4 +135,67 @@ for i in str2 {
     print(i)
 }
 
+// シーケンスとコレクションを扱うプロトコル
+/*
+シーケンスとは
+ その要素に一方向から順次アクセス可能なデータ構造
+*/
+
+// Sequence Protocol
+// forEach
+// filter
+// map
+// flatMap
+// compactMap
+// reduce
+
+// forEach
+// 要素に対して順次アクセスする
+// return Void
+
+let array = [1,2,3,4,5,6]
+var enumerated = [] as [Int]
+array.forEach { element in
+    enumerated.append(element)
+}
+enumerated
+
+// filter 要素を絞り込む
+// 2の倍数のものだけを含む
+let array1 = [1,2,3,4,5,6]
+let filterd = array1.filter { element in
+    element % 2 == 0
+}
+filterd // 2, 4, 6
+
+// map 要素を変換する
+let array2 = [1,2,3,4,5,6]
+// 2倍した配列を生成
+let doubled = array2.map { element in
+    element * 2
+}
+doubled
+
+// Stringにコンバート
+let convarted = array2.map { element in
+    String(element)
+}
+convarted
+
+// flatMap
+// 要素をシーケンスに変換し、それを１つのシーケンスに連結する
+// 元々の要素とそれに１を足した値を含む配列を返却する
+let a = [1, 4, 7]
+let fMap = a.flatMap { value in
+    [value, value + 1]
+}
+fMap // [1, 2, 4, 5, 7, 8]
+// mapだと二重配列になってしまう
+
+let map = a.map { val in
+    [val, val + 1]
+}
+map // [[1, 2], [4, 5], [7, 8]]
+// なぜ？　→ クロージャーが返す方がそのままシーケンスの要素となるため、二重になってしまう
+
 
