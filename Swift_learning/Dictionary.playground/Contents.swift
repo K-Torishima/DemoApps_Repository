@@ -36,3 +36,32 @@ Dictionary型は　正式には
 
 let dic3 = ["even":[2, 4, 6, 8], "odd": [1, 3, 5, 7, 9]]
 print(dic3["even"]!)
+
+// 値のアクセス
+
+let dic4 = ["key": 1]
+let val = dic["key"]
+
+// nil比較
+
+let dic5 = ["key1": "val1"]
+let valForKey1 = dic5["key1"] != nil // true
+let valForkey2 = dic5["key2"] != nil // false
+
+// 値の更新　追加　削除
+
+// 更新
+var dic6 = ["key" : 1]
+dic6["key"] = 2
+dic6 // 1 から 2に更新されている
+
+// 追加
+var dic7 = ["key1" : 1]
+dic7["key2"] = 2
+dic7 // ["key1" : 1, "key2": 2]
+
+// 削除
+var dic8 = ["key" : 1]
+dic8["key"] = nil
+dic8 // [:]
+
