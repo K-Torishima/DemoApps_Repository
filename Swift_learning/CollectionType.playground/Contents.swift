@@ -223,3 +223,6 @@ let concat = arrayA.reduce("") { (res, element) in
     res + String(element)
 }
 concat
+
+// Collection Protocol
+// サブスクリプトによる要素へのサクセス
