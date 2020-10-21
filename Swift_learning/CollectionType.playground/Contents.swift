@@ -225,4 +225,19 @@ let concat = arrayA.reduce("") { (res, element) in
 concat
 
 // Collection Protocol
+// filter mapなどにも使える
 // サブスクリプトによる要素へのサクセス
+/*
+ .isEmpty
+ .count
+ .first
+ .last
+*/
+
+let arrayB = [1,2,3,4,5,6]
+arrayB[3]      // 4
+arrayB.isEmpty // false
+arrayB.count   // 6
+arrayB.first   // 1
+arrayB.last    // 6
+
