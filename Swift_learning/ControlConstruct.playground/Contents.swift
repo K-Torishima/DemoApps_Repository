@@ -206,3 +206,19 @@ default:
 }
 
 // ケースの網羅チェック
+enum SomeEnum {
+    case foo
+    case bar
+    case baz
+}
+
+let someEnum = SomeEnum.foo
+// somEnumを網羅すること
+switch someEnum {
+case .foo:
+    print("foo")
+case .bar:
+    print("bar")
+case .baz:
+    print("baz")
+}
