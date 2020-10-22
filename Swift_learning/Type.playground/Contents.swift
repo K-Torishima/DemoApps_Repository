@@ -198,8 +198,8 @@ let int2 = any as? Int
 let str4 = any as? String
 
 let any2 = 1 as Any
-let int3 = any as! Int
-let str5 = any as! String // これは実行時errorになる
+//let int3 = any as! Int
+//let str5 = any as! String // これは実行時errorになる
 
 // 基本的には　as?を使う　as!は失敗しないケースなどで使うと良いが、使わない方が良い
 
@@ -234,8 +234,5 @@ intLeft != intRight // true
 // Comparable
 // < > <= とか使う
 // 値の大小とかを使って検証するプロトコルである
-// 
-
-
-
+//
 

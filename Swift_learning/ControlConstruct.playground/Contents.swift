@@ -222,3 +222,19 @@ case .bar:
 case .baz:
     print("baz")
 }
+
+let aA = true
+
+switch aA {
+case true:
+    print("true")
+case false:
+    print("false")
+
+}
+
+// デフォルトは極力使わない
+//　新たに追加された時網羅できなくなってしまうから
+
+//
+
