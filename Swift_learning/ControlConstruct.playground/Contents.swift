@@ -124,3 +124,85 @@ func someFunction() {
     }
 }
 someFunction()
+
+//　スコープ外への退出の強制
+// guard 文のelse 節ではguard文が含まれるスコープから退出しなければならない
+// スコープからの退出はコンパイラによってチェックされているためguard文のelse節以降ではguard文の条件式が必ず成り立っていることがコンパイル時に保証される
+// Int型の引数が０よりも大きくなければguardから退出する
+//　必ず０以上でなければならない
+func printIfPositve(_ a: Int) {
+    guard a > 0 else {
+        return
+    }
+    print(a)
+}
+printIfPositve(0)
+
+// guard文で宣言された変数や定数へのアクセス
+
+func some() {
+    let a: Any = 1
+
+    guard let int = a as? Int else {
+        print("aはInt型ではありません")
+        return
+    }
+
+    // int はguard文以降でも仕様可能
+    print("値はInt型の\(int)です")
+}
+
+// if文との使い分け
+// if文の場合
+func add(_ optionalA: Int?, _ optionalB: Int?) -> Int? {
+    let a: Int
+    let b: Int
+
+    if let unwappedA = optionalA {
+        a = unwappedA
+    } else {
+        print("第一引数に値が入っていせん")
+        return nil
+    }
+
+    if let unwappedB = optionalB {
+        b = unwappedB
+    } else {
+        print("第二引数に値が入っていません")
+        return nil
+    }
+    return a + b
+}
+add(Optional(1), Optional(2))
+
+
+// guardの場合
+func add2(_ optionalA: Int?, _ optionalB: Int?) -> Int? {
+
+    guard let a = optionalA else {
+        print("第1引数に値が入っていせん")
+        return nil
+    }
+
+    guard let b = optionalB else {
+        print("第2引数に値が入っていせん")
+        return nil
+    }
+
+    return a + b
+}
+
+// switch
+
+let num = 1
+
+switch num {
+case Int.min ..< 0:
+    print("aは負の値です")
+case 1 ..< Int.max:
+    print("aは正の数です")
+default:
+    print("aは0です")
+}
+
+// ケースの網羅チェック
