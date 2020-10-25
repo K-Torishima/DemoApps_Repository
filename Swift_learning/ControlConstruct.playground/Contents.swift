@@ -236,5 +236,14 @@ case false:
 // デフォルトは極力使わない
 //　新たに追加された時網羅できなくなってしまうから
 
-//
+// where ケースにマッチする条件の追加
+
+let numA: Int? = 1
+
+switch numA {
+case .some(let a) where a > 10:
+    print("10より大きい値\(a)が存在する")
+default:
+    print("値が存在しない、もしくは10以下です")
+}
 
