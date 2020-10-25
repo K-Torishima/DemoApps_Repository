@@ -247,3 +247,18 @@ default:
     print("値が存在しない、もしくは10以下です")
 }
 
+// break ケースの実行の中断
+
+let numB = 1
+
+switch numB {
+case 1:
+    print("実行される")
+    break
+    print("実行されない")
+default:
+    break
+}
+
+
+// breakの制御対象の指定
