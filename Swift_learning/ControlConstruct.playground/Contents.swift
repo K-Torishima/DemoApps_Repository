@@ -414,5 +414,165 @@ func someFunc() -> Int {
     return count
 }
 
-someFunc()
-count
+// 関数の実行前は０
+// countにアクセスすると、更新されて１が出る
+someFunc() // 0
+count // 1
+
+// パターンマッチ
+/*
+ - 式パターン
+ - optional パターン
+ - 列挙ケース
+ - is
+ - as
+ */
+
+
+// 式パターン expression pattern ~=演算子
+
+let integer = 9
+
+switch integer {
+case 6:
+    print("match: 6")
+case 5...10:
+    print("match: 5...10")
+default:
+    print("default")
+}
+
+// バリューバインデング
+// パターンマッチすれば値をvar let に代入
+// これはあまり使わないかも。。。
+var valueB = 3
+
+switch valueB {
+case let matchedValue:
+    print(matchedValue)
+}
+
+// optional pattern
+// バリューバインデングパターンと一緒に使うのが良い
+// Int? からInt型を取り出し　定数aに代入している
+
+let opA = Optional(4)
+
+switch opA {
+case let a?:
+    print(a)
+default:
+    print("nil")
+}
+
+//　列挙型ケースパターン
+
+//  半球を表す
+enum Hemisphere {
+    case northern // 北半球
+    case southern // 南半球
+}
+
+let hemisphere = Hemisphere.northern
+
+switch hemisphere {
+case .northern:
+    print("match: .northern")
+case .southern:
+    print("match: .southern")
+
+}
+
+// Optionalでも同じように実行される
+
+// 列挙型パターンは連想値のパターンマッチににも使える
+
+enum Color {
+    case rgb(Int, Int, Int)
+    case cmyk(Int, Int, Int, Int)
+}
+
+let color = Color.rgb(100, 200, 255)
+let color2 = Color.cmyk(100, 200, 300, 400)
+
+switch color {
+case .rgb(let r, let g, let b):
+    print(".rgb: \(r), \(g), \(b)")
+
+case .cmyk(let c, let m, let y, let k):
+    print(".cmyk: \(c), \(m), \(y), \(k)")
+}
+
+// isによるキャスティングパターン　trueならマッチする
+
+let any: Any = 1
+
+switch any {
+case is String:
+    print("match to String")
+case is Int:
+    print("match to Int")
+default:
+    print("not match")
+}
+
+
+// asによるキャスティングパターン
+// doun cast 成功した時マッチ
+
+let any1: Any = 1
+
+switch any1 {
+case let string as String:
+    print("match String to \(string)")
+case let int as Int:
+    print("match Int to \(int)")
+default:
+    print("not match")
+}
+
+// パターンマッチが伝えるところ
+
+// if
+
+let valueC = 9
+if case 1...10 = valueC {
+    print("1以上10以下")
+}
+
+// guard
+
+func someFunctionA() {
+    let value = 9
+    guard case 1...10 = value else { return }
+    print("1以上10以下")
+}
+
+someFunctionA()
+
+
+// for in
+let arrayC = [1,2,3,4,5]
+
+for case 2...3 in arrayC {
+    print("2以上3以下")
+}
+
+// while
+// Int? の値nextValueをオプショナルパターンで評価し、定数　nextValue　が nil にならない間は処理を繰り返している
+var nextValue = Optional(1)
+
+while case let value? = nextValue {
+    print("value: \(value)")
+
+    if value >= 3 {
+        nextValue = nil
+    } else {
+        nextValue = value + 1
+    }
+}
+
+
+
+
+
