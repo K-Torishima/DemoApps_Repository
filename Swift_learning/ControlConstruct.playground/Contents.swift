@@ -287,7 +287,132 @@ default:
     print("対象外の方の値です")
 }
 
+// fallthrough文
+// switch文のケースの実行を終了し、次のケースを実行する制御構文。　fallthrough文は fallthroughキーワードのみで構成されている
+
+let mumAA = 1
+
+switch mumAA {
+case 1:
+    print("case 1")
+    fallthrough
+case 2:
+    print("case 2")
+default:
+    print("default")
+}
+
+// 繰り返し
+// for in while
+
+// for in シーケンスの要素の列挙
+
+let array = [1,2,3]
+
+for element in array {
+    print(element)
+}
+
+let dic = ["a": 1, "b": 2]
+
+for (key, value) in dic {
+    print("key: \(key), value\(value)")
+}
+
+// while 継続条件の繰り返し
+// bool で判定　trueで繰り返しを継続する　falseで繰り返しを停止　while全体の処理を終了
+
+//var aaa = 1
+
+//while aaa < 4 {
+//    print(aaa)
+//    aaa + 1
+//}
+
+// repeat - while　初回実行を保証する繰り返し
+
+/*
+repeat {
+ 一回は必ず実行される、それ以降は条件式が成立する限り繰り返し実行される文
+ } while 条件式
+ */
 
 
+var aaaa = 1
 
+// こっちはじっこされない
+//while aaaa < 1 {
+//    print(aaaa)
+//    aaaa + 1
+//}
 
+// こっちは実行される
+//repeat {
+//    print(aaaa)
+//    aaaa + 1
+//} while aaaa < 1
+
+// 実行中断
+// break
+// 配列に　”２”が存在するか検証するプログラム
+// ”２”があった時点で、後続の繰り返しを行う必要はないので、breakし繰り返しを終了する
+
+var containsTwo = false
+let arrayA = [1,2,3]
+
+for element in arrayA {
+    if element == 2 {
+        containsTwo = true
+        break
+    }
+    print("element: \(element)")
+}
+
+print("containsTwo: \(containsTwo)")
+
+// continue　繰り返しの継続
+// 実行中断した後、継続の繰り返しを継続する
+// 特定の場合だけ処理をスキップする
+
+var odds = [Int]()
+let arrayB = [1,2,3]
+
+for element in arrayB {
+    if element % 2 == 1 {
+        odds.append(element)
+        continue
+    }
+    print("even: \(element)")
+}
+
+print("odds: \(odds)")
+
+// breakとは違い後続の繰り返しは継続され、全ての要素に対して、処理が行われる
+
+// breakとcontineにもLabelをつけれる
+// break: label
+// contine: label
+
+label: for elem in [1,2,3] {
+    for nestElm in [1,2,3] {
+        print("elem: \(elem), nestElm\(nestElm)")
+        break label
+    }
+}
+
+// 実行結果が１つしか表示されていない、初回実行で外側の繰り返しが終了している
+
+// 遅延実行
+// defer
+
+var count = 0
+
+func someFunc() -> Int {
+    defer {
+        count += 1
+    }
+    return count
+}
+
+someFunc()
+count
