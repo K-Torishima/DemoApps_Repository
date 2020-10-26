@@ -255,11 +255,39 @@ switch numB {
 case 1:
     print("実行される")
     break
-    print("実行されない")
+    // print("実行されない")
 default:
     break
 }
 
 
-// breakの制御対象の指定
+// breakの制御対象の指定  ラベル
+// break文の制御対象をしてするための仕組みです
+
+// 例
+// Any型の値が１から１０までのInt型の値であれば、その値が奇数か偶数かを出力するプリグラム
+
+let valueA = 0 as Any
+
+// Label: switch
+outerSwitch: switch valueA {
+case let int as Int:
+    let description: String
+    switch int {
+    case 1,3,5,7,9:
+        description = "奇数"
+    case 2,4,6,8,10:
+        description = "偶数"
+    default:
+        print("対象外の値です")
+        break outerSwitch
+    }
+    print("値は\(description)です")
+default:
+    print("対象外の方の値です")
+}
+
+
+
+
 
