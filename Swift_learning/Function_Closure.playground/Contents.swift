@@ -381,3 +381,5 @@ func or(_ lhs: Bool, _ rhs: @autoclosure () -> Bool) -> Bool {
 or(true, false) // true
 
 //　escaping
+// ここは大切なので、必ず行う
+
