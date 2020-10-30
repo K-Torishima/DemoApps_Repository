@@ -382,4 +382,4 @@ or(true, false) // true
 
 //　escaping
 // ここは大切なので、必ず行う
-
+// 明日書く
