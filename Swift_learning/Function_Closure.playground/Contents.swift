@@ -392,6 +392,10 @@ or(true, false) // true
 
 var queue = [() -> Void]()
 
+//　引数として与えられたクロージャ を配列queueに追加します
+//　つまり　この引数のクロージャ はスコープ外で保持される
+//　そのためenqueue関数の引数には　escaping属性を指定する必要があります
+//　指定しない場合はコンパイルエラーになる
 func enqueue(operation: @escaping () -> Void) {
     queue.append(operation)
 }
