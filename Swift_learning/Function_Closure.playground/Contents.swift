@@ -381,5 +381,25 @@ func or(_ lhs: Bool, _ rhs: @autoclosure () -> Bool) -> Bool {
 or(true, false) // true
 
 //　escaping
-// ここは大切なので、必ず行う
-// 明日書く
+// 非同期的に実行されるクロージャー
+/*
+ 関数引数として渡されたクロージャーが、関数のスコープ外で保持される可能性があることを示す属性
+ コンパイラはescaping属性の有無によってクロージャ がキャプチャを行う必要があるかを判別します
+ クロージャ が関数のスコープ外で保持される可能性がある場合、つまり、escaping属性が必要な場合は、
+ クロージャ の実行時までの関数のスコープ外で保持する必要があるため、キャプチャが必要となります。
+
+ */
+
+var queue = [() -> Void]()
+
+func enqueue(operation: @escaping () -> Void) {
+    queue.append(operation)
+}
+
+enqueue {
+    print("executed")
+}
+enqueue {
+    print("executed")
+}
+queue.forEach { $0() }
