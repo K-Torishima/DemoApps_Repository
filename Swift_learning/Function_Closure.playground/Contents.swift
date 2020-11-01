@@ -370,15 +370,15 @@ func 関数名(引数：＠属性名　クロージャ の型名）{
 
  */
 
-func or(_ lhs: Bool, _ rhs: @autoclosure () -> Bool) -> Bool {
-    if lhs {
-        return true
-    } else {
-        return rhs()
-    }
-}
-
-or(true, false) // true
+//func or(_ lhs: Bool, _ rhs: @autoclosure () -> Bool) -> Bool {
+//    if lhs {
+//        return true
+//    } else {
+//        return rhs()
+//    }
+//}
+//
+//or(true, false) // true
 
 //　escaping
 // 非同期的に実行されるクロージャー
@@ -407,3 +407,106 @@ enqueue {
     print("executed")
 }
 queue.forEach { $0() }
+
+//escaping属性がされていないクロージャ は関数のスコープ外で保持できない
+//　クロージャの実行は関数スコープ内で行わなければならない
+//　executeTwice関数に渡されたクロージャ は　escaping属性がしていませんが関数のスコープ内のみで実行されるため、コンパイルerrorにならない
+func executeTwice(operation: () -> Void) {
+//　ここで実行されている
+    operation()
+    operation()
+}
+
+executeTwice {
+    print(("executed"))
+}
+
+
+//　autocloseure　クロージャを用いた遅延評価
+//　引数をクロージャで包むことで、遅延評価を実現するための属性
+
+// Bool型の引数を２つ取り、その論理和を返すor関数
+//　論理和を求める　｜｜演算子と同じ挙動をする関数
+
+
+func or(_ lhs: Bool, _ rhs: Bool) -> Bool {
+    if lhs {
+        print("true")
+        return true
+    } else {
+        print(rhs)
+        return rhs
+    }
+}
+
+or(true, false)
+
+//　第一引数にはlhs()
+// 第二引数にはrhsを戻り値にする
+//　lhsとrhsの関数の内部ではprintを実行して、それぞれの関数が実行されたかどうかが確認できるようにしています
+
+
+func orA(_ lhs: Bool, _ rhs: Bool) -> Bool {
+    if lhs {
+        print("true")
+        return true
+    } else {
+        print(rhs)
+        return rhs
+    }
+}
+
+func lhs() -> Bool {
+    print("lhs()が実行されました")
+    return true
+}
+
+func rhs() -> Bool {
+    print("rhs()が実行されました")
+    return false
+}
+
+orA(lhs(), rhs())
+
+// トレイリングクロージャ  引数のクロージャを（）のそとに記述する記法
+
+/*
+ トレイリングクロージャとは関数の最後の引数がクロージャの場合にクロージャを（）のそとに書くことでできる記法です
+ */
+
+func execute(parameter: Int, handler: (String) -> Void) {
+    handler("parameter is \(parameter)")
+}
+
+// トレイリングクロージャを使用しない場合
+execute(parameter: 1, handler: { string in
+    print(string)
+})
+
+//　トレイリングクロージャを使った場合
+execute(parameter: 2) { print($0) }
+
+//　引数が一つの場合関数呼び出しの（）も省略できる
+
+func executeA(handler: (String) -> Void) {
+    handler("executed")
+}
+
+//　同じ
+executeA { valure in
+    print(valure)
+}
+//　同じ
+executeA { print($0) }
+
+// クロージャとしての関数
+/*
+関数はクロージャの一種であるため、クロージャとして扱えます、関数をクロージャとして利用するには、関数名だけのしきで関数を参照する
+関数をクロージャとして扱うことで、関数や変数や定数に代入したり、別の関数の引数を渡したりすることができる
+
+ let 定数名　=  関数名
+ */
+
+
+
+
