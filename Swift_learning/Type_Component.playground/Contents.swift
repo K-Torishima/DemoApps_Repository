@@ -100,5 +100,115 @@ struct SomeStructD {
     }
 }
 
-// プロパティ
+// プロパティ　型に紐付いた値
+/*
+型に紐付いた値で、型が表すものの属性の表現などに使用される
+ 本という型はタイトルや著者名や概要などのプロパティを持っている
+ この１つ１つの本ごとに異なりますから、プロパティのインスタンスに紐付いた変数や定数であることも言える
+
+ */
+
+//　定義方法
+// var
+// let
+// で定義する
+
+/*
+struct 構造体 {
+    var プロパティ: プロパティの型 = 式　// 再代入可能
+    let プロパティ: プロパティの型 = 式　// 再代入不可
+}
+*/
+
+/*
+ プロパティにアクセスするには、型のインスタンスが再代入された変数や定数に、. とプロパテ名をつけて変数名. プロパティ名のようにできる
+ 次の例では、SomeStruct型に再代入可能なプロパティvariableと再代入不可能なプロパティconstantを定義し、
+ それぞれのプロパティにアクセスしている
+ */
+
+
+struct SomeStructF {
+    var valiable = 123
+    let constant = 456
+}
+
+let someStructF = SomeStructF()
+let a = someStructF.valiable // 123
+let b = someStructF.constant // 456
+
+
+// プロパテの型の整合性を保つため、インスタンス化の完了までに全てのプロパティが代入されていなければなりません。
+//　したがって、全てのプロパティは、宣言時に初期化を持っているかイニシャライザ内で初期化されるかのいずれかの方法で値を持つ必要がある
+
+// 紐ずく対象の分類
+//　プロパテは型のインスタンスに紐ずくインスタンスプロパティと型そのものに紐ずくスタティックプロパティがある
+
+//　インスタンスプロパティ 型に紐ずくプロパティ
+// 異なる値を持たせることができる
+//　var let はデフォでインスタンスプロパティ
+
+struct Greeting {
+    var to = "koji"
+    var body = "Hello"
+}
+
+let greeting1 = Greeting()
+var greeting2 = Greeting()
+
+greeting2.to = "torishima"
+
+let to1 = greeting1.to // koji
+let to2 = greeting2.to // torishima
+
+//　スタティックプロパティ
+// 型自身に紐ずくプロパティ
+
+//　型のインスタンスに紐付くのではなく、型自身に紐ずくプロパティ
+//　インスタンス間で共通する値の保持などに使用する
+
+//　スタティックプロパティを定義するには　static をつける
+//　アクセス方法　型.スタティックプロパティ
+
+//　例
+//　スタティックプロパティsignatureは全てのGreeting型の値に共通した値となる
+// greeting型は、インスタンスプロパテのtoとbody、スタティックプロパティのsignatureを組み合わせて、インスタンスごとに異なる宛先と文そして共通の署名を持つことになる
+
+struct GreetingCom {
+    static let signature = "Sent from iPhone" // 共通している
+
+    var to = "koji torishima"
+    var body = "Hello"
+}
+
+func printOnSelf(greeting: GreetingCom) {
+    print("to: \(greeting.to)　変更可能")
+    print("body: \(greeting.body)　変更可能")
+    print("signature: \(GreetingCom.signature)　これは共通してます")
+}
+
+let greetingA = GreetingCom()
+var greetingB = GreetingCom()
+
+greetingB.to = "tanaka tatuya"
+greetingB.body = "Hi"
+
+printOnSelf(greeting: greetingA)
+print("--")
+printOnSelf(greeting: greetingB)
+
+// インスタンスプロパティはインスタンス生成するまでに値を代入できれば良いので、プロパティの宣言意外にイニシャライザ内でも値を代入できるが、スタティックプロパティはイニシャライザに相当する初期化タイミングがないため、宣言時に必ず初期値を持たせる必要はある
+
+//　以下はコンパイルerror
+
+/*
+struct AAA {
+ 値を持っていないためError
+ 'static var' declaration requires an initializer expression or getter/setter specifier
+ static var' の宣言には、初期化式またはゲッター/セッター指定子が必要です。
+
+ static var aaa: String
+}
+ */
+
+// ストアドプロパティ 値を保持するプロパティ
 
