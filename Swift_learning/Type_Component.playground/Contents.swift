@@ -211,4 +211,20 @@ struct AAA {
  */
 
 // ストアドプロパティ 値を保持するプロパティ
+// 変数や定数のように値を代入して、保持する
 
+/*
+ var インスタンスプロパティ名: プロパティの型 = 式
+ let インスタンスプロパティ名: プロパティの型 = 式
+ static var インスタンスプロパティ名: プロパティの型 = 式
+ static let インスタンスプロパティ名: プロパティの型 = 式
+
+ */
+
+struct SomeStructG {
+    var variable = 123              // 再代入可能
+    let constant = 456              // 再代入不可能
+    static var staticVariable = 789 // 再代入可能 型自身に紐ずく
+    static let staticConstant = 890 // 再代入不可能　型自身に紐ずく
+
+}
