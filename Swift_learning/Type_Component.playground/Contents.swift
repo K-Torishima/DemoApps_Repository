@@ -228,3 +228,5 @@ struct SomeStructG {
     static let staticConstant = 890 // 再代入不可能　型自身に紐ずく
 
 }
+
+//　プロパティオブザーバー
