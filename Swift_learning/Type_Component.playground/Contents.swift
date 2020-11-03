@@ -229,4 +229,40 @@ struct SomeStructG {
 
 }
 
-//　プロパティオブザーバー
+//　プロパティオブザーバー　ストアドプロパティの変更監視
+// 変更前と変更後に文を実行するもの
+
+/*
+
+ var プロパティ名 = 初期値　{
+
+     willSet {
+     　　プロパティの変更前に実行する文
+     　　変更後の値には定数newValueとしてアクセスできる
+     }
+
+     didSet {
+     プロパティの変更後に実行する文
+     }
+ }
+ */
+
+
+struct GreetingG {
+    var to = "koji" {
+        willSet {
+            print("willSet: (to:\(self.to), newValue: \(newValue))")
+        }
+
+        didSet {
+            print("didSet: (to: \(self.to))")
+        }
+    }
+}
+
+var greetingG = GreetingG()
+greetingG.to = "tanaka"
+
+//　レジーストアドプロパティ
+
+
