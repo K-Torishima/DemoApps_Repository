@@ -263,6 +263,44 @@ struct GreetingG {
 var greetingG = GreetingG()
 greetingG.to = "tanaka"
 
-//　レジーストアドプロパティ
+//　レジーストアドプロパティ　アクセス時までの初期化を遅延させるプロパティ
 
+// lazy var インスタンスプロパティ: プロパティの型 = 式
+// static lazy var スタティックプロパティの型　= 式
+// let  では使えない
+
+struct SomeStructH {
+    var value: Int = {
+        print("valueの値を生成します")
+        return 1
+    }()
+
+    lazy var lazyValue: Int = {
+        print("lazyValueの値を生成します")
+        return 2
+    }()
+}
+
+var someStructH = SomeStructH()
+print("SomeStructHをインスタンス化しました")
+print("valueの値\(someStructH.value)です")
+print("lazyValueの値は\(someStructH.lazyValue)の値です")
+
+//　通常のプロパティ（value）はインスタンス化時に初期化が行われ、Lazyの場合はアクセス時に初期化が行われる
+//　初期化コストの高いプロパティの初期化をアクセス時まで伸ばし、アプリケーションのパフォーマンスを向上させることができる
+//　通常は、ストアドプロパティの初期化時には、他のプロパティやメソッドを利用することはできません。
+//　しかしレジーストアドプロパティの初期化はインスタンス生成よりも後に行われるため、初期化時に他のプロパティやインスタンスにアクセスできます
+
+
+// rei レジーストアドプロパティであるlazyValueプロパティの初期化にvalueプロパティとdouble(of:)メソッドを使用しています。
+struct SomeStructI {
+    var value = 1
+    lazy var lazyValue = double(of: value)
+
+    func double(of value: Int) -> Int {
+        return value * 2
+    }
+}
+
+//　コンピューテッドプロパティ　値を保持せず算出するプロパティ
 
