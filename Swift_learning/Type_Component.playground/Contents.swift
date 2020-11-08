@@ -303,4 +303,239 @@ struct SomeStructI {
 }
 
 //　コンピューテッドプロパティ　値を保持せず算出するプロパティ
+// すでに存在するストアドプロパティなどから計算して値を返すプロパティ
 
+// get
+struct GreetingH {
+    var to = "koji.torishima"
+
+    var body: String {
+        get {
+            return "Hello"
+        }
+    }
+
+}
+
+// set
+
+struct Temperature {
+
+    var celsius: Double = 0.0
+
+    var fahrenheit: Double {
+        get {
+            return (9.0 / 5.0) * celsius + 32.0
+        }
+
+        set {
+            celsius = (5.0 / 9.0) * (newValue - 32.0)
+        }
+    }
+}
+
+var temperature = Temperature()
+temperature.celsius
+temperature.fahrenheit
+
+temperature.celsius = 20
+
+temperature.celsius
+temperature.fahrenheit
+
+temperature.fahrenheit = 32
+
+temperature.celsius
+temperature.fahrenheit
+
+//　セッター省略
+
+struct GreetingI {
+    var to = "koji"
+    var body: String {
+        return "Hello \(to)"
+    }
+}
+
+let greetingI = GreetingI()
+greetingI.body  // これはgetのみ呼びたし
+// setが定義されていないためコンパイルerror
+//　greetingI.body = "hi"
+
+
+//　イニシャライザ
+// 型のインスタンスを初期化する
+//　すべてのプロパティはインスタンス化の完了までに値が代入されていなければいけないためプロパティの宣言時を持たないプロパティは
+//　イニシャライザ内で初期化する必要がある
+
+struct GreetingJ {
+    let to: String
+    var body: String {
+        return "Hello \(to)"
+    }
+
+    init(to: String) {
+        self.to = to
+    }
+}
+
+let greetingJ = GreetingJ(to: "koji")
+let body = greetingJ.body
+
+
+// 失敗型イニシャライザ
+/*
+ イニシャライザはすべてのプロパティを正しい型の値で初期化する役割を果たしていますが。イニシャライザの引数によっては
+ プロパティを初期化できないケースが出てきています。
+ 初期化に失敗する可能性があるイニシャライザは失敗可能イニシャライザとして表現でき、結果をOptionalで返す
+ 失敗可能イニシャライザはinitキーワードに？を加えてinit?(引数)のように定義する
+ 初期化の失敗はreturn nilで表し、イニシャライザはnilを返す
+ 初期化を失敗させる場合はインスタンス化が行われないため、プロパティ を未初期化のままできます
+ */
+
+
+struct Item {
+    let id: Int
+    let title: String
+
+    init?(dictionary: [String: Any]) {
+        guard let id = dictionary["id"] as? Int,
+              let title = dictionary["title"] as? String else {
+            return nil
+        }
+        self.id = id
+        self.title = title
+    }
+}
+
+let dictionaries: [[String: Any]] = [
+    ["id": 1, "title": "abc"],
+    ["id": 2, "title": "def"],
+    ["title": "ghi"], // かけているので生成できない
+    ["id": 3, "title": "jki"],
+]
+
+for dictionary in dictionaries {
+    if let item = Item(dictionary: dictionary) {
+        print(item)
+    } else {
+        print("Error: dictionary\(dictionary)から　Itemを生成できませんでした")
+    }
+}
+
+// コンパイラーによる初期化チェック
+
+struct GreetingK {
+    let to: String
+    var body: String {
+        return "Hello \(to)"
+    }
+
+    init(to: String) {
+        self.to = to // ここを書かないとコンパイルerror
+    }
+}
+
+//　プロパティを初期化せずにインスタンス化を終えてしまう条件が一つでも存在する場合もコンパイルできない
+// 失敗可能イニシャライザにするか、デフォでプロパティ を埋めるかどうかを選択することでコンパイル可能になる
+
+struct GreetingL {
+    let to: String
+    var body: String {
+        return "Hello \(to)"
+    }
+
+    init?(dictionary: [String: String]) {
+        guard let to = dictionary["to"] else { return nil }
+        self.to = to
+    }
+}
+
+// デフォの値の用意
+struct GreetingM {
+    let to: String
+    var body: String {
+        return "Hello \(to)"
+    }
+
+    init(dictionary: [String: String]) {
+        to = dictionary["to"] ?? "koji, tori"
+    }
+}
+
+
+// メソッド
+/*
+ func メソッド名（引数）→ 戻り値　{
+ メソッド呼び出し時に実行される文
+ }
+ */
+
+struct GreetingN {
+    func greet(user: String) -> Void {
+        print("Hello \(user)")
+    }
+}
+
+let greetingN = GreetingN()
+greetingN.greet(user: "koji")
+
+// 紐ずく対象の分類
+// プロパティと同様にメソッドには型のインスタンスに紐付いたインスタンスメソッドと、型自身に紐付いたスタティックメソッドがある
+
+//　インスタンスメソッド
+//　型のインスタンスに紐ずくメソッド
+
+struct SomeStructAA {
+    var value = 0
+    func printValue() {
+        print("value: \(self.value)")
+    }
+}
+
+var someStructAA = SomeStructAA()
+someStructAA.value = 1
+someStructAA.printValue()
+someStructAA.value = 21
+someStructAA.printValue()
+
+// スタティックメソッド 型自身に紐ずくメソッド
+// インスタンスに存在しない処理に使う
+//  下記の動き
+//　GreetingAA型にはスタティックプロパティsignatureが定義されておりその初期値には"Sent from iPhone"
+//　スタティックメソッドsetSignature(withDeviceName:)は、端末名を指定してこのプロパティを更新している
+//　Xperiaを引数にしてsignatureプロパティの値をSent from Xperiaに更新
+
+struct GreetingAA {
+    static var signature = "Sent from iPhone"
+
+    static func setSignature(withDeviceName deviceName: String) {
+        signature = "sent from \(deviceName)"
+    }
+
+    var to = "koji.torishima"
+    var boby: String {
+        return "Hello \(to)\n\(GreetingAA.signature)"
+    }
+}
+
+let greetingAA = GreetingAA()
+print(greetingAA.boby)
+print("--")
+
+GreetingAA.setSignature(withDeviceName: "Xperia")
+print(greetingAA.boby)
+
+//　オーバーロード
+//　型が異なるメソッドの定義
+
+/*
+ オーバーロード
+ このなる型の引数や戻り値をとる同名のメソッドを複数用意し、引数に渡されるかたや戻り値の代入先の型に応じて
+ 実行するメソッドを切り替える手法です
+ オーバーロードは入出力の型が異なるにた処理に対して同名のメソッド群を用意し、呼び出し側にそれらの違いを意識させないという用途で使われる
+
+ */
+
+//　引数によるオーバーロード
+//　引数によってメソッドをオーバーロードするには、引数の型だ異なる同名のメソッドを複数定義します
