@@ -26,7 +26,7 @@ public struct NasaImageApiItemData : Codable {
 
 
 class Client {
-    let url = URL(string: "https://qiita.com/api/v2/items/a53b0b3f7e1bc7c06106/likes")!
+    let url = URL(string: "https://qiita.com/api/v2/items")!
 
     // GET
     internal func getTask() {
@@ -85,3 +85,55 @@ class Client {
 let client = Client()
 client.getTask()
 client.postTask()
+
+
+
+
+
+// QittaのAPIでテストする
+
+
+
+//struct Qiita: Codable {
+//    var title: String
+//    var user: String
+//
+//    struct User: Codable {
+//        var name: String
+//    }
+//}
+//
+//class Client {
+//    let url = URL(string: "https://qiita.com/api/v2/items")!
+//
+//    func get() {
+//        let request = URLRequest(url: url)
+//        var qiitaArray: [Qiita] = []
+//
+//        let session = URLSession.shared.dataTask(with: request) { (data, res, error) in
+//            guard let jsonData = data else { return }
+//            self.printJson(jsonData)
+//
+//            do {
+//                let articles = try JSONDecoder().decode([Qiita].self, from: jsonData)
+//                qiitaArray.append(contentsOf: articles)
+//                print(articles)
+//            } catch {
+//                print(error.localizedDescription)
+//            }
+//        }
+//        session.resume()
+//    }
+//
+//        private func printJson(_ data: Data) {
+//            do {
+//                let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+//                print(json)
+//            } catch {
+//                print("error")
+//            }
+//        }
+//}
+//
+//let client = Client()
+//client.get
