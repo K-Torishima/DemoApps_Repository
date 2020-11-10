@@ -538,4 +538,256 @@ print(greetingAA.boby)
  */
 
 //　引数によるオーバーロード
-//　引数によってメソッドをオーバーロードするには、引数の型だ異なる同名のメソッドを複数定義します
+//　引数によってメソッドをオーバーロードするには、引数の型が異なる同名のメソッドを複数定義します
+
+struct Printer {
+    func put(_ value: String) {
+        print("String: \(value)")
+    }
+
+    func put(_ value: Int) {
+        print("Int: \(value)")
+    }
+}
+
+let printer = Printer()
+printer.put("koji")
+printer.put(123)
+
+// 戻り値によるオーバーロード
+// 戻り値によってメソッドをオーバーロードするには、戻り値の型が異なる同名のメソッドを複数定義する
+
+struct ValueContainer {
+    let stringValue = "abc"
+    let intValue = 123
+
+    func getValue() -> String {
+        stringValue
+    }
+
+    func getValue() -> Int {
+        intValue
+    }
+}
+
+let valueContainer = ValueContainer()
+let string: String = valueContainer.getValue() // 型指定しないとError 同じ名前だと型推論聞かない
+let int: Int = valueContainer.getValue() // getValue()' の曖昧な使用
+
+// サブスクリプト
+
+// 配列や、辞書なあどのコレクション要素へのアクセスを統一に表すための文法
+let array = [1,2,3]
+let firstElement = array[0]
+
+let dic = ["a": 1, "b": 2, "c": 3]
+let elementForA = dic["a"]
+
+// 定義方法
+
+/*
+ subscript(引数)　-> 戻り値　{
+     get {
+     return
+     }
+
+     set {
+     値を更新する処理
+     }
+ }
+
+ 使い方
+型のインスタンスが代入された変数や定数に[]で囲まれた引数を付けて変数名[引数]のように書く
+値の取得はゲッタが呼び出され、変数名[引数] = 新しい値のようにして値が入力される時セッタが呼ばれる
+
+*/
+
+// 数列をProgression型として定義し、ここの要素へのアクセスをサブスクリプトで表現している
+struct Progression {
+    var numbers: [Int]
+
+    subscript(index: Int) -> Int {
+        get {
+            return numbers[index]
+        }
+
+        set {
+            numbers[index] = newValue
+        }
+    }
+}
+
+var progression = Progression(numbers: [1, 2, 3])
+let element1 = progression[1]
+
+progression[1] = 4 // set
+let element2 = progression[1]
+print(progression)
+
+
+
+// 引数が複数ある場合
+/*
+Matrix型を定義し、要素へのアクセスをサブスクリプトで表現する
+外部引数名は_  となるため[1,1]のように行列内要素にアクセスできる
+*/
+
+
+struct Matrix {
+    var rows: [[Int]]
+
+    subscript(row: Int, column: Int) -> Int {
+        get {
+            return rows[row][column]
+        }
+
+        set {
+            rows[row][column] = newValue
+        }
+    }
+}
+
+let matrix = Matrix(rows: [
+    [1,2,3],
+    [4,5,6],
+    [7,8,9],
+])
+
+let element = matrix[1,1] // 5
+print(element)
+
+// set省略
+//　getは定義が必須 setは省略できる
+
+struct Progression1 {
+    var numbers: [Int]
+
+    subscript(index: Int) -> Int {
+        numbers[index]
+    }
+}
+
+var progression1 = Progression1(numbers: [1,2,3])
+progression1[0] // 1
+
+//　set省略している場合は、代入による値の更新ができなくなり、サブスクリプトによって値を更新するコードはコンパイルerrorになる
+
+//　subscript　のオーバーロード 方が異なるサブスクリプトの定義
+let array1 = [1,2,3,4]
+let elm = array1[0] // element
+let slice = array1[0...2]  // ArraySlice<Element>
+
+
+// Extention
+// 型の拡張
+
+extension String {
+    func printSelf() {
+        print(self)
+    }
+}
+
+let string1 = "123"
+string1.printSelf() // 123
+
+// コンピューテッドプロパティの追加
+// ストアドプロパティ は追加できない　コンピューテッドプロパティは追加できる
+// Extentionで定義したコンピューテットはもともと定義されたプロパティと同様に使える
+
+extension String {
+    var enclosedString: String {
+        return "【\(self)】"
+    }
+}
+
+let title = "重要".enclosedString + "今日は休み"
+title.printSelf()  //【重要】今日は休み
+
+//　イニシャライザの追加
+//　既存型にイニシャライザを追加することで、アプリケーション固有の情報から既存の型のインスタンスを生成することが可能
+
+import UIKit
+
+enum WebAPIError: Error {
+    case connectionError(Error)
+    case fatalError
+
+    var title: String {
+        switch self {
+        case .connectionError:
+            return "通信error"
+        case .fatalError:
+            return "致命的Error"
+        }
+    }
+
+    var massage: String {
+        switch self {
+        case .connectionError(let underlyingError):
+            return underlyingError.localizedDescription
+            + "再試行して下さい"
+        case .fatalError:
+            return "サポート窓口に連絡して下さい"
+        }
+    }
+}
+
+extension UIAlertController {
+    convenience init(webAPIError: WebAPIError) {
+        self.init(title: webAPIError.title,
+                  message: webAPIError.massage,
+                  preferredStyle: .alert)
+    }
+}
+
+let error = WebAPIError.fatalError
+let alertController = UIAlertController(webAPIError: error)
+
+// 型のネスト
+// 型をネストできる
+
+//enum NewsFeedItemKind {
+//    case a
+//    case b
+//    case c
+//}
+//
+//struct NewsFeedItem {
+//    let id: Int
+//    let title: String
+//    let type: NewsFeedItemKind
+//}
+// NewsFeedItemKindはNewsFeedItemの種類を表していると推測できるが、名前でしか縛られていない
+//　NewsFeedItemKindをNewsFeedItemの中にネストさせてKindにリネームするとNewsFeedItem.Kindになる
+
+
+
+struct NewsFeedItem {
+    enum Kind {
+        case a
+        case b
+        case c
+    }
+
+    let id: Int
+    let title: String
+    let kind: Kind
+
+    init(id: Int, title: String, kind: Kind) {
+        self.id = id
+        self.title = title
+        self.kind = kind
+    }
+}
+
+let kind = NewsFeedItem.Kind.a
+let item = NewsFeedItem(id: 1, title: "Table", kind: kind)
+
+switch item.kind {
+case .a:
+    print("kind is .a")
+case .b:
+    print("kind is .b")
+case .c:
+    print("kind is .c")
+}
