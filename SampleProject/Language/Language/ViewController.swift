@@ -25,12 +25,11 @@ class ViewController: UIViewController {
 
 
 //    端末のLangを取得
-    let locale = Locale.preferredLanguages
+    let locale = Locale.current
 
     override func viewDidLoad() {
         super.viewDidLoad()
 //       取得したLangを表示
-        print("locale: \(locale)")
 //        print("現在のlocale言語: \(locale[0])")
 //        print(locale[0])
          let aaaa = changeLanguages()
@@ -43,26 +42,48 @@ class ViewController: UIViewController {
 //    言語比較
 //    端末の言語を比較しprintを指定
 //    printを値としてパラメータに指定させる
-    func changeLanguages() -> String {
-        let val = locale[0]
-        
-        if val.contains("ja") {
-            print("ja")
-        } else if val.contains("en") {
-            print("en")
-        } else if val.contains("vi") {
-            print("vi")
-        } else if val.contains("id") {
-            print("id")
-        } else if val.contains("zh-Hans") {
-            print("zh-Hans") // 簡単な方
-        } else if val.contains("zh-Hant") {
-            print("zh-Hant") // 難しい方
-        } else {
-            print("上記以外")
-        }
+//    func changeLanguages() -> String {
+//        let val = locale[0]
+//
+//        if val.contains("ja") {
+//            print("ja")
+//        } else if val.contains("en") {
+//            print("en")
+//        } else if val.contains("vi") {
+//            print("vi")
+//        } else if val.contains("id") {
+//            print("id")
+//        } else if val.contains("zh-Hans") {
+//            print("zh-Hans") // 簡単な方
+//        } else if val.contains("zh-Hant") {
+//            print("zh-Hant") // 難しい方
+//        } else {
+//            print("上記以外")
+//        }
+//
+//        return val
+//    }
 
-        return val
+    enum Lang {
+        case zhcn
+        case zhtw
+        case ja
+    }
+
+
+//   この処理で動く
+    func changeLanguages() -> String {
+        let val = locale.languageCode ?? ""
+        let val2 = locale.scriptCode
+
+        switch val2 {
+        case "Hans":
+            return "zh-cn"
+        case "Hant":
+            return "zh-tw"
+        default:
+            return val
+        }
     }
 }
 
