@@ -64,14 +64,7 @@ class ViewController: UIViewController {
 //        return val
 //    }
 
-    enum Lang {
-        case zhcn
-        case zhtw
-        case ja
-    }
-
-
-//   この処理で動く
+    // この処理で動く
     func changeLanguages() -> String {
         let val = locale.languageCode ?? ""
         let val2 = locale.scriptCode
