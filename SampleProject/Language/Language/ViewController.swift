@@ -65,17 +65,29 @@ class ViewController: UIViewController {
 //    }
 
     // この処理で動く
-    func changeLanguages() -> String {
-        let val = locale.languageCode ?? ""
-        let val2 = locale.scriptCode
+    // languageCode 先頭
+    // scriptCode Hant とか
+    // 5言語の場合はそれぞれの言語を返す
+    // それ以外の場合はjaを返す
+    // 中国語の場合はscriptCodeを見て判定をかける
 
-        switch val2 {
-        case "Hans":
-            return "zh-cn"
-        case "Hant":
-            return "zh-tw"
-        default:
-            return val
+    let array = ["ja", "vi", "id", "en"]
+
+    func changeLanguages() -> String {
+        let languageCode = locale.languageCode ?? ""
+        let scriptCode = locale.scriptCode
+
+        if array.contains(languageCode) {
+            switch scriptCode {
+            case "Hans":
+                return "zh-cn"
+            case "Hant":
+                return "zh-tw"
+            default:
+                return languageCode
+            }
+        } else {
+            return "ja"
         }
     }
 }
