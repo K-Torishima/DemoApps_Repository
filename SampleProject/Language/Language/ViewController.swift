@@ -71,11 +71,14 @@ class ViewController: UIViewController {
     // それ以外の場合はjaを返す
     // 中国語の場合はscriptCodeを見て判定をかける
 
-    let array = ["ja", "vi", "id", "en"]
+
 
     func changeLanguages() -> String {
+        let array = ["ja", "vi", "id", "en"]
         let languageCode = locale.languageCode ?? ""
+        print("languageCode: \(languageCode)")
         let scriptCode = locale.scriptCode
+        print("scriptCode: \(String(describing: scriptCode))")
 
         if array.contains(languageCode) {
             switch scriptCode {
