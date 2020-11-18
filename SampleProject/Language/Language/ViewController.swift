@@ -34,7 +34,7 @@ class ViewController: UIViewController {
 //       取得したLangを表示
 //        print("現在のlocale言語: \(locale[0])")
 //        print(locale[0])
-        let aaaa = Locale.current.changeLanguages()
+        let aaaa = Locale.current.acceptLnguage
             print("return val \(aaaa)")
 
 
@@ -101,9 +101,9 @@ class ViewController: UIViewController {
 
 
 
-
+// コンピューテットで良い
 extension Locale {
-    func changeLanguages() -> String {
+    var acceptLnguage: String {
         switch scriptCode {
         case "Hans":
             return "zh-cn"
