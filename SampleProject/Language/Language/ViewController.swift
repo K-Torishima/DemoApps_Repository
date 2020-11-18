@@ -29,11 +29,13 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        print(Locale.autoupdatingCurrent.languageCode)
+        
 //       取得したLangを表示
 //        print("現在のlocale言語: \(locale[0])")
 //        print(locale[0])
-         let aaaa = changeLanguages()
-         print("return val \(aaaa)")
+        let aaaa = Locale.current.changeLanguages()
+            print("return val \(aaaa)")
 
 
     }
@@ -73,24 +75,42 @@ class ViewController: UIViewController {
 
 
 
-    func changeLanguages() -> String {
-        let array = ["ja", "vi", "id", "en"]
-        let languageCode = locale.languageCode ?? ""
-        print("languageCode: \(languageCode)")
-        let scriptCode = locale.scriptCode
-        print("scriptCode: \(String(describing: scriptCode))")
+//    func changeLanguages() -> String {
+//        let array = ["ja", "vi", "id", "en", "zh"]
+//        let languageCode = locale.languageCode ?? ""
+//        print("languageCode: \(languageCode)")
+//        let scriptCode = locale.scriptCode
+//        print("scriptCode: \(String(describing: scriptCode))")
+//
+//        if array.contains(languageCode) {
+//            switch scriptCode {
+//            case "Hans":
+//                return "zh-cn"
+//            case "Hant":
+//                return "zh-tw"
+//            default:
+//                return languageCode
+//            }
+//        } else {
+//            return "ja"
+//        }
+//    }
+//}
 
-        if array.contains(languageCode) {
-            switch scriptCode {
-            case "Hans":
-                return "zh-cn"
-            case "Hant":
-                return "zh-tw"
-            default:
-                return languageCode
-            }
-        } else {
-            return "ja"
+}
+
+
+
+
+extension Locale {
+    func changeLanguages() -> String {
+        switch scriptCode {
+        case "Hans":
+            return "zh-cn"
+        case "Hant":
+            return "zh-tw"
+        default:
+            return languageCode ?? ""
         }
     }
 }
