@@ -204,3 +204,35 @@ enum FruitA: CaseIterable {
 FruitA.allCases // [peach, apple, grape]
 
 // 上記は自明であるため、わざわざ自分で行う必要はない
+//　これ以外には
+// Equatable
+// Hashable
+
+// がある
+
+// allCasesプロパティコードが自動生成されない条件
+//　列挙型が連想値を持つ場合、allCasesの実装が自動生成されない
+//　そのような場合でも列挙型でも全てのケースを列挙したい場合　自分で実装する必要がある
+
+enum Car: CaseIterable {
+    case toyota, nissan, honda(type: CarType)
+
+    static var allCases: [Car] {
+        return [
+            .toyota,
+            .nissan,
+            .honda(type: .ban),
+            .honda(type: .kei)
+        ]
+    }
+}
+
+enum CarType {
+    case ban, kei
+}
+
+Car.allCases
+
+
+
+
