@@ -461,6 +461,43 @@ fuelCarCache.save(value: car1)
 print(cacheable: car1, store: fuelCarCache)
 // print: 10
 
+print("-----------------------------------Swift実践入門-------------------------------------- ")
+
+
+// --------------------------------------------------------------------------- //
+// Swift実践入門では
+
+// protocolとは、型のインターフェースを定義するものである
+// インターフェースは型がどのようなプロパティやメソッドを持っているかを示します。
+// この本ではプロトコルによるインターフェースの定義方法、プロトコルへの準拠方法、デフォルト実装の定義方法を説明します。
+
+// 型のインターフェースを定義する目的
+// プロトコルは型が特定の性質は機能を持つために、必要なインターフェースを定義するためのものです。
+//　また、プロトコルが要求するインターフェースを型が満たすことを準拠する
+//　プロトコルを利用することで、複数の型である性質を抽象化できる、例えば、2つの値が同じであるかどうかを同値性といい、
+//　同値性が検証可能であるという性質は標準ライブラリのEqutable プロトコルとして表現されている
+//　Equtableプロトコルには　＝＝演算子が定義されており、このプロトコルに準拠するには　==演算子に対する実装を用意する必要がある
+//　このようなプロトコルが存在しているおかげで、具体的には問わないが、同値性が検証可能な型だけを扱うことが可能となる、
+//　プロトコルを利用すれば、型のインターフェースのみに着目したプログラムを実現できます
+
+func printfEqual<T:Equatable>(_ arg1: T, _ arg2: T) {
+    if arg1 == arg2 {
+        print("Both are \(arg1)")
+    } else {
+        print("not equal arg1 to arg2")
+    }
+}
+// Value of protocol type 'Any' cannot conform to 'RawRepresentable'; only struct/enum/class types can conform to protocols
+//func printE(arg1: Any, arg2: Any) {
+//    if arg1 == arg2 {
+//        print("Both are \(arg1)")
+//    } else {
+//        print("not equal arg1 to arg2")
+//    }
+//}
+
+printfEqual(123, 123)
+printfEqual("str", "str")
 
 
 
