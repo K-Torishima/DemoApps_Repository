@@ -783,8 +783,42 @@ struct StructC: ProtocolA {
 }
 
 
+// RandomValueGeneratorプロトコルは、ランダムな値を生成するという性質を表現しています。
+//　返却する値の型は連想型valueであり、このValue型の実際の型はプロトコルに準拠する方が決定しています
+//　IntegerRandomValueGenerator型はValueをInt
+//　StringRandomValueGeneratorはValueをString
+
+protocol RandomValueGenerator {
+    associatedtype Value
+
+    func randomValue() -> Value
+}
+
+struct IntegerRandomValueGenerator: RandomValueGenerator {
+    func randomValue() -> Int {
+        return Int.random(in: Int.min...Int.max)
+    }
+}
+
+struct StringRandomValueGenerator: RandomValueGenerator {
+    func randomValue() -> String {
+        let letters = "abcdefghijklmnopqrstuvwxyz"
+        let offset = Int.random(in: 0..<letters.count)
+        let index = letters.index(letters.startIndex, offsetBy: offset)
+        return String(letters[index])
+    }
+}
+
+// 連想型を利用できれば、一つの方に存在しない抽象的な性質を定義できる
 
 
+//　型制約の追加
+//　protocolの連想型が準拠すべきスーパークラスを指定して、連想型を設けることができる
+//　連想型の宣言の後に：を追加し、プロトコル名やスーパークラス名を続けます。
+//　連想型が、型の制約を満たすかどうかはコンパイラによってチェックされ、満たさない場合はコンパイルエラーになる
 
+// protocol プロトコル名　{
+// associatedtype
+//}
 
 
