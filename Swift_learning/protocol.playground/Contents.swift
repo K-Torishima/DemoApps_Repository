@@ -500,6 +500,183 @@ printfEqual(123, 123)
 printfEqual("str", "str")
 
 
+// プロトコルの基本
+//　型はプロトコルに準拠することにより、プロトコルで定義されたインターフェースを通じて扱うことが可能となっている
+//　型は複数のprotocolを準拠できる
+//　protocolに準拠するにはprotocolが要求する全てのインターフェースに対応する実装を用意する必要がある
+
+protocol SomeProtocolA {
+    func someMethod()
+}
+
+struct SomeStructA: SomeProtocolA {
+    func someMethod() {}
+}
+
+// someMethod が実装されてないのでError
+//　struct SomeStructB: SomeProtocolA {}
+
+// class継承
+
+class SomeSuperClass {}
+
+class SomeClassA: SomeSperClass, SomeProtocolA {
+    func someMethod() {}
+}
+
+// extention
+/*
+ 一つのextentionで複数のプロトコルに準拠することもできるが、一つのプロトコルに対して、
+ extentionを定義することによって、プロパティ、メソッドとプロトコルの対応が明確になる
+ 複数のプロトコルに準拠するときなどは特に、どのプロトコルやメソッドがどのプロトコルで宣言されているものなのかわかりにくくなりがち
+ エクステンションを利用することによってCodeの可読性を高めることができる
+ */
+
+protocol SomeB {
+    func someBM()
+}
+
+protocol SomeC {
+    func someCM()
+}
+
+
+struct SomeStructAA {
+    let someP: Int
+}
+
+// 使いたいものを分けている
+extension SomeStructAA: SomeB {
+    func someBM() {}
+}
+
+//　そのときに応じたプロトコルに準拠できる
+extension SomeStructAA: SomeC {
+    func someCM() {}
+}
+
+// 利用方法
+//　構造体、クラス、列挙型、クロージャと同様に、変数、定数、引数の方として利用可能、
+//　プロトコルに準拠している型は、プロトコルにアップキャスト可能
+//　型がプロトコルの変数や定数に代入できる
+//　型がプロトコルの変数と定数ではプロトコルが定義されているプロパティやメソッドを使用できる
+
+protocol SomeProtocolAA {
+    var variable: Int { get }
+}
+
+func someMethodAA(x: SomeProtocolAA) {
+    // 引数xのプロパティや、メソッドのうち
+    // SomeProtocolで定義しているものが使用可能
+    x.variable
+}
+
+// 連想型を持つプロトコルは変数、定数や引数の型として使用することができず、ジェネリティクスの型制約の記述のみに利用できる
+
+//　protocolコンポジション
+// 複数のプロトコルの組み合わせ
+
+protocol SomeProtocolAAA {
+    var variable1: Int { get }
+}
+
+protocol SomeProtocolBBB {
+    var variable2: Int { get }
+}
+
+struct SomeStructAAA: SomeProtocolAAA, SomeProtocolBBB {
+    var variable1: Int
+    var variable2: Int
+}
+
+func someFunction(x: SomeProtocolAAA & SomeProtocolBBB) {
+    x.variable1 + x.variable2
+}
+
+let a = SomeStructAAA(variable1: 1, variable2: 2)
+someFunction(x: a) // 3
+
+
+
+// プロトコルを構成する要素
+
+//　プロパティ
+//　ゲッタとセッタの有無のみを定義し、プロトコルに準拠する型で要求に応じてプロパティを実装する
+//　常に　var
+//　letは使用できない
+//　ストアド、コンピューテッドと言った区別がないから
+
+
+protocol SomeProtocolAAAA {
+    var someProperty: Int { get set }
+}
+
+//　ゲッタ
+
+protocol SomeProtocolBBBB {
+    var id: Int { get }
+}
+
+// 変数のストアド
+struct SomeStructBBBB: SomeProtocolBBBB {
+    var id: Int
+}
+
+// 定数のストアド
+struct SomeStructCCCC: SomeProtocolBBBB {
+    let id: Int
+}
+
+// コンピューテット
+struct SomeStructDDDD: SomeProtocolBBBB {
+    var id: Int {
+        return 1
+    }
+
+}
+
+// セッタ
+// let　は要件を満たせないのでError
+
+protocol SomeProtocolCCCC {
+    var title: String { get set }
+}
+
+// 変数のストアド
+struct SomeStructEEEE: SomeProtocolCCCC {
+    var title: String
+}
+
+// コンピューテッド
+struct SomeStructFFFF: SomeProtocolCCCC {
+    var title: String {
+        get {
+            return "title"
+        }
+
+        set {}
+    }
+}
+
+// メソッド
+// purotocolのメソッドは　メソッド名、引数の型、戻り値のみを実装できる
+protocol SomeProtocolDDDD {
+    func someMethod() -> Void
+    static func someStaticMethod() -> Void
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
