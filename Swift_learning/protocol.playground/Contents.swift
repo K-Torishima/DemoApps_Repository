@@ -659,20 +659,128 @@ struct SomeStructFFFF: SomeProtocolCCCC {
 }
 
 // メソッド
-// purotocolのメソッドは　メソッド名、引数の型、戻り値のみを実装できる
+// purotocolのメソッドは　メソッド名、引数の型、戻り値のみを実装できる　{}はいらない
+//　実装は同じインターフェースを持つメソッドを実装する
 protocol SomeProtocolDDDD {
     func someMethod() -> Void
     static func someStaticMethod() -> Void
 }
 
+struct SomeStructGGGG: SomeProtocolDDDD {
+    func someMethod() {
+        // 実装
+    }
+
+    static func someStaticMethod() {
+        // 実装
+    }
+}
 
 
+//　mutatingキーワード
+//　値型のインスタンスの変更を宣言するキーワード
+//　プロトコルへの準拠チェックでは、値型のインスタンスを変更し得るメソッドと変更しないメソッドは区別される
+//　値型のインスタンスを変更し得るメソッドをプロトコルに定義する場合、プロトコル側のメソッドの定義にmutatingを追加
+//　参照型のメソッドでは、mutatingによって、インスタンスの変更の有無を区別する必要がないので、クラスをプロトコルに準拠させる際にmutatingをつける必要はない
+
+protocol SomeProtocolEEEE {
+    mutating func someMutatingMethod()
+    func someMerhod()
+}
+
+// 構造体
+struct SomeStructHHHH: SomeProtocolEEEE {
+    var number: Int
+
+    mutating func someMutatingMethod() -> Void {
+        // SomeStructHHHHの値を変更する処理を入れることができる
+        number = 1
+    }
+
+    // Cannot assign to property: 'self' is immutable
+    // Mark method 'mutating' to make 'self' mutable
+    func someMerhod() {
+        // SomeStructHHHHの値を変更する処理を入れることができない
+//        number = 1
+    }
+}
 
 
+class SomeClass: SomeProtocolEEEE {
+
+    var number = 0
+    // 参照型であるクラスではmutatingは不要
+    func someMutatingMethod() -> Void {
+        // SomeClassの値を変更できる処理を入れることができる
+        number = 1
+    }
+
+    func someMerhod() {
+        // SomeClassの値を変更できる処理を入れることができる
+        number = 1
+    }
 
 
+}
 
 
+// 連想型
+// プロトコルの準拠時に指定可能な型
+// プロトコルの定義時にプロパティの型やメソッドの引数や戻り値の型を具体的にしてする必要はあったが、連想型を用いるとプロトコルの準拠時にこれらの型を指定できる
+//　プロトコルの側では連想型はプレスホルダーとして働き、連想型の実際の型は準拠する型の方で指定する、連想型を使用すれば、一つの型に依存しない、より抽象的なプロトコルを定義できる
+
+//protocol protocolName {
+//    associatedtype 連想型名
+//
+//    var プロパティ名: 連想型名
+//    func メソッド(引数: 連想型名)
+//    func メソッド名() -> 連想型名
+//}
+//
+
+//　連想型の実際の型は、プロトコルに準拠する型ごとに指定できる、
+//　連想型の実際の型の指定は、型エイリアスを使用し、準拠する型の定義の内部で、連想型と同名の型エイリアスを
+// typeealias連想型名 = 指定する型名　　として定義する
+//　ただし、連想型が自動的に決定する場合は、型エイリアスの定義を省略できる
+//　連想型は型エイリアスだけでなく、同名のネスト型によって指定することもできる
+
+protocol ProtocolA {
+    associatedtype AssociatedType
+
+
+//　連想型はプロパティやメソッドでも使用可能
+    var value: AssociatedType { get }
+    func someMethod(value: AssociatedType) -> AssociatedType
+}
+
+struct StructA: ProtocolA {
+    typealias Associatedtype = Int
+
+    var value: Associatedtype
+    func someMethod(value: Associatedtype) -> Associatedtype {
+        return 1
+    }
+}
+
+// 実装から AssociatedTypeが自動的に決定する
+struct StructB: ProtocolA {
+    var value: Int
+
+    func someMethod(value: Int) -> Int {
+        return 1
+    }
+}
+
+// ネスト型AssociatedTypeを定義することで、要件を満たす
+
+struct StructC: ProtocolA {
+    struct AssociatedType {}
+
+    var value: AssociatedType
+    func someMethod(value: AssociatedType) -> AssociatedType {
+        return AssociatedType()
+    }
+}
 
 
 
