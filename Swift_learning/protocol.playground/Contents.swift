@@ -821,4 +821,190 @@ struct StringRandomValueGenerator: RandomValueGenerator {
 // associatedtype
 //}
 
+class SomeClassA1 {}
 
+protocol SomeProtocolA1 {
+    associatedtype AssociatedType: SomeClassA1
+}
+
+class SomeSubClass: SomeClassA1 {}
+
+// SomeSubClassはSomeClassA1のサブクラスなので、AssociatedTypeの制約を満たす
+
+struct ConformedStruct: SomeProtocolA1 {
+    typealias AssociatedType  = SomeSubClass
+}
+
+// IntはSomeClassA1のサブクラスではないためError
+// Type 'NonConfomedStruct' does not conform to protocol 'SomeProtocolA1'
+//struct NonConfomedStruct: SomeProtocolA1 {
+//    typealias AssociatedType = Int
+//}
+
+//　プロトコル名を続けてwhere節を追加すると、より詳細な制約をつけることができる
+// where節では、プロトコルに準拠する型自信をSelfキーワードで参照でき、その連想型も　. をつけてSelf.連想型のように参照できる」
+// selfは省略できる . をつけて　Self.連想型.連想型　と記述することで、連想型の連想型も参照できる
+
+// SomeDataプロトコルの連想型ValueContainerの連想型ContentがEqurableプロトコルに準拠するという制約を設けている
+protocol Container {
+    associatedtype Content
+}
+
+protocol SomeData {
+    associatedtype ValueContainer: Container where
+    ValueContainer.Content: Equatable
+}
+
+// ==も使える
+
+protocol ContainerA {
+    associatedtype Content
+}
+
+protocol SomeDataA {
+    associatedtype ValueContainer: ContainerA where
+    ValueContainer.Content == Int
+}
+
+// 型制約を複数指定する場合は制約1,制約2,制約3のように区切りで並べられる
+// SomeDataプロトコルの連想型ValueContainerの連想型ContentがEqutableプロトコルに準拠し、尚且つ別の連想型Valueと一致するという制約を設けている
+
+protocol ContainerB {
+    associatedtype Content
+}
+
+protocol SomeDataB {
+    associatedtype Value
+    associatedtype ValueContainer: ContainerB where
+        // 制約１　　　　　　　　　　　　　　　　　制約２
+    ValueContainer.Content: Equatable, ValueContainer.Content == Value
+}
+
+
+// デフォルト型の指定
+// プロトコルの連想型には、宣言と同時にデフォルトの型を指定できる、連想型にデフォルトの型を設定すれば、プロトコルに準拠する型側での連想型の指定が任意となる
+
+protocol SomeProtocolA2 {
+    associatedtype AssociatedType = Int
+}
+
+// AssociatedTypeを定義しなくてもSomeProtocolA2に準拠できる
+
+struct SomeStructA2: SomeProtocolA2 {
+    // SomeStructA2.AssociatedTypeはIntとなる
+}
+
+//　プロトコルの継承、
+
+protocol Protocol1 {
+    var id: Int { get }
+}
+
+protocol Protocol2 {
+    var title: String { get }
+}
+
+// id, titleの２つを要求するprotocol
+protocol Protocol3: Protocol1, Protocol2 {}
+
+class SomeABC: Protocol3 {
+    var id: Int {
+        return 1
+    }
+    var title: String {
+        return "title"
+    }
+}
+
+// クラス専用Protocol
+// プロトコルは準拠する型を限定でき、クラス専用プロトコルとする、
+//　準拠する型が参照型であることを想定する場合に使用する、デリゲートパターンとか
+// struct enumはできない
+protocol SomeClassOnlyProtocol: class {}
+
+// extention
+
+protocol Item {
+    var name: String { get }
+    var category: String { get }
+}
+
+extension Item {
+    var description: String {
+        return "商標名\(name), カテゴリ\(category)"
+    }
+}
+
+// 値型なのでinit書かなくて良い
+struct Book: Item {
+    let name: String
+
+    var category: String {
+        return "書籍"
+    }
+}
+
+let book = Book(name: "ローランド")
+print(book.description)
+
+
+//　デフォルト実装による実装の任意化
+// プロトコルに定義されているインターフェースに対して、プロトコルエクステンションで実装を追加すると、プロトコルに準拠する型での実装は任意となる
+//　準拠する型が再定義しなかった場合はプロトコルエクステンションの実装が使用される、デフォルト実装という
+
+protocol ItemA {
+    var name: String { get }
+    var caution: String? { get }
+}
+
+extension ItemA {
+    var caution: String? {
+        return nil
+    }
+
+    var description: String {
+        var description = "商品名: \(name)"
+        if let caution = caution {
+            description += ", 注意事項: \(caution)"
+        }
+        return description
+    }
+}
+
+struct BookA: ItemA {
+    let name: String
+}
+
+struct Fish: ItemA {
+    let name: String
+
+    var caution: String? {
+        return "クール便での配送となります"
+    }
+}
+
+let bookA = BookA(name: "Swift実践入門")
+print(bookA.description)
+let fish = Fish(name: "マグロ")
+print(fish.description)
+
+//　型制約の追加
+// プロトコルエクステンションには、型制約を追加できる
+//　条件を満たす場合のみ、プロトコルエクステンションを有効にできる
+// where
+
+// Collectionプロトコルの連想型Elementが、Int型と一致する場合のみ利用可能とするエクステンションを定義し、sumプロパティで各要素の合計を返す
+
+extension Collection where Element == Int {
+    var sum: Int {
+        return reduce(0) { return $0 + $1 }
+    }
+}
+
+let integers = [1,2,3]
+integers.sum // 6
+
+let strings = ["a", "b", "c"]
+// stringsはIntではないのでsumが使えない
+// strings.sum
+// Property 'sum' requires the types 'String' and 'Int' be equivalent
