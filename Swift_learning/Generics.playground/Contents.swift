@@ -147,9 +147,32 @@ func identity<T>(x: T) -> T {
 identity(x: 1)
 identity(x: "abc")
 
+//　特殊化方法
+//　ジェネリック関数の実行には、特殊化が必要となります。
+//　ジェネリック関数を特殊化するには、
+//　２つある
+//　引数から型推論によって型引数を決定する方法
+//　戻り値から型推論によって型引数を決定する方法
 
+//　引数から型推論による特殊化
+//　引数からの型推論によって、特殊化を行うには、ジェネリック関数の引数のうちの少なくとも一つの型が型引数となっているう必要がある
 
+func someFunction<T>(_ argument: T) -> T {
+    return argument
+}
 
+let intA = someFunction(1)
+let stringA = someFunction("abc")
+
+// 上記は下記のCodeとおなじ
+
+func someFunction(_ argment: Int) -> Int {
+    return argment
+}
+
+func someFunction(_ argment: String) -> String {
+    return argment
+}
 
 
 
