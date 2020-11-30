@@ -174,12 +174,20 @@ func someFunction(_ argment: String) -> String {
     return argment
 }
 
+//　型引数が複数の引数や、戻り値で使用される場合、それらの実際の型は一致する必要がる
+//　someFnction関数では、第一引数と第二引数の型は同じ型引数Tで表されているため、２つの引数のかたは一致する必要がある
+//　someFunctionの引数に１と"abc"のような異なる型を与えた場合はこんぱいるErrorになる
+
+func someFunction<T>(_ argment: T, _ aragment: T) {}
+
+someFunction(1,2)
+someFunction("abc", "def")
+// someFunction(1, "abc")  // error
+//　Cannot convert value of type 'String' to expected argument type 'Int'
 
 
-
-
-
-
+//　戻り値からの型推論による特殊変化
+//　戻り値からの型推論によって特殊化を行うには、ジェネリック関数の戻り値の型が型引数となっていて、かつ、戻り値の代入先の型が決まっている必要がある
 
 
 
