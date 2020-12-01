@@ -189,6 +189,171 @@ someFunction("abc", "def")
 //　戻り値からの型推論による特殊変化
 //　戻り値からの型推論によって特殊化を行うには、ジェネリック関数の戻り値の型が型引数となっていて、かつ、戻り値の代入先の型が決まっている必要がある
 
+// someFunctionでは、String？型の変数や定数へ戻り値を代入する場合はT型をStringと決定でき、Int？型の変数や定数へ戻り値を代入する場合は、T型をInt型と決定できる
+//　しかし、戻り値の代入先がない場合や、戻り値の代入先の型が決まっていない場合はT型を決定する要因がないため、コンパイルerrorとなる
+
+func someFunction<T>(any: Any) -> T? {
+    return any as? T
+}
+
+let a: String? = someFunction(any: "abc")
+let b: Int? = someFunction(any: 1)
+// let c = someFunction(any: "abc") // Tが決定できずコンパイルerror
+// Generic parameter 'T' could not be inferred
+
+//　型制約　型引数に対する制約
+//　準拠すべきプロトコルやスーパークラスなど、型引数には様々な制約を設けることができる
+//　型制約を利用することで、ジェネリック関数やジェネリック型をより細かくコントロールできる
+//　型制約がない型引数ではどのような型でも受け入れるため、型の性質を利用した記述ができていませんでした。型引数を設けることで、型の性質を利用できる
+//　型引数に必要十分な型制約を与えると、汎用性と型の性質を利用した具体的な処理とを両立できる
+
+//　型制約の種類は、スーパークラスや準拠するプロトコルに対する制約、連想型のスーパークラスや準拠するプロトコルに対する制約、型同士の一致を要求する制約の3つがある
+
+//　スーパークラスや準拠するプロトコルに対する制約
+//　型引数のスーパークラスや準拠するプロトコルに対する制約を指定するには、型引数のあと：に続けてプロトコル名や、スーパークラス名を指定する
+
+
+//func 関数名<型引数: プロトコル名やスーパークラス名>(引数)　{
+//    関数呼び出し時に実行される文
+//}
+
+
+//　引数に使用される型引数TをEqutableプロトコルに準拠したものに限定しています。
+//　この型制約を設けることにより、isEqual()関数内のT型に対して、Equtableプロトコルで定義されている演算子　== が利用できる
+
+func isEqualA<T: Equatable>(x: T, y: T) -> Bool {
+    return x == y
+}
+
+isEqualA(x: "abc", y: "def") // false
+
+// 連想型のスーパークラスや準拠するプロトコルに対する制約
+// 型引数にはwhere節を追加でき、where節では、型引数の連想型についての型制約を定義できる
+//　連想型の型制約では、連想型のスーパークラスや準拠すべきプロトコルについての制約と、型同士の一致を要求する制約を設けることもできる
+//　連想型のスーパークラスや準拠すべきプロトコルについての制約を指定するには、where節内で、連想型のあと：に続けてプロトコルやスーパークラス名をしてする
+
+//func 関数名<型名: プロトコル>(引数) -> 戻り値の型　where 連想型: プロトコルやスーパークラス {
+//    関数呼び出し時に実行される文
+//}
+
+
+//　次のジェネリック関数sorted()の例では型引数TがCollectionプロトコルに準拠していることを要求しているのに加えて、where節でT.Element型がComparableプロトコルに準拠していること要求している
+//　このような型制約を設けることで、sorted()関数の引数は比較可能な要素を持ったコレクションに限定されるため、ソート処理を実装できる
+
+func sorted<T: Collection>(_ argument: T) -> [T.Element] where T.Element: Comparable {
+    return argument.sorted()
+}
+
+sorted([3,2,1])
+
+//　どうしの一致を要求する制約
+//　型引数と連想型の一致や連想型どうしの一致を要求する型制約を設けるには、where節内で一致すべき型どうしを　＝＝　演算子でむずぶ
+
+//func 関数名<型引数1: Protocol1, 型引数2: Protocol2>(引数) -> 戻り値の型 where Protocol1の連想型 == Protocol2の連想型　{
+//    関数呼び出し時に実行される文
+//}
+
+// ジェネリック関数concat()は2つのCollection型の値を連結します。
+//　concat()関数はCollectionプロトコルに準拠した別々の型引数TとUを受けとしますが、これらの連想型T.ElementとU.Elrmentが一致することを要求している
+// 例に登場するSet<Element>型は数学における集合を表すジェネリック型であり、Collectionプロトコルに準拠している、
+//　Set([1,2,3])はSet<Element>型をIntで特殊化したSet<Int>型となる
+//　concat()の引数に対し、「配列や集合といったコレクションの種類は問わないものの、その要素の型は一致してないといけない」という限定的な制限を設けることができる
+//　したがって、異なる型でありながらも要素の型は一致している[Int]型とSet＜Int>型を引数に撮ることができる
+
+func concat<T: Collection, U: Collection>(_ argment1: T, _ argment2: U) -> [T.Element] where T.Element == U.Element {
+    return Array(argment1) + Array(argment2)
+}
+
+let array = [1,2,3]
+let set = Set([1,2,3])
+let result = concat(array, set) // 1,2,3,2,3,1
+
+//　ジェネリック型
+//　汎用的な型
+//　型引数を持つクラス、構造体、列挙型のこと、
+
+//　定義方法
+
+struct StructName<T> {
+    // 構造体の定義
+}
+
+class ClassName<T> {
+    // クラスの定義
+}
+
+enum EnumName<T> {
+    // Enumの名前
+}
+
+
+//　型引数は型の内部で通常の型と同じように使用できる
+
+struct GenericStruct<T> {
+    var property: T
+}
+
+class GenericClass<T> {
+    func someFunction(x: T) {}
+}
+
+enum GenericEnum<T> {
+    case SomeCase(T)
+}
+
+
+// 特殊化方法
+
+// 明示的に型引数を指定する方法
+//　型推論によって、型引数を決定する方法
+
+//　型引数の指定による特殊化
+// ジェネリック型では、型引数の直接指定による特殊化を行える
+//　異なる型を与えた場合はerror
+
+struct ContainerA<Content> {
+    var content: Content
+}
+
+let intContainerA = ContainerA<Int>(content: 1)
+let stringContainerA = ContainerA<String>(content: "abc")
+//let someContainerA = ContainerA<Int>(content: "aaa") // 型が違うためerror
+//　Cannot convert value of type 'String' to expected argument type 'Int'
+
+// 型推論による特殊化
+//　ジェネリック型では、明示的に型引数を指定しなくても、
+//　イニシャライザやスタティックメソッドの引数からの型推論によって特殊化を行える。型推論によるジェネリック型の特殊化は、ジェネリック関数での特殊化と同様に引数型が型引数となる
+
+//　型推論による特殊化を利用すると、前述のContainer<Int>型のインスタンス化は次のように書き直せる
+//　この場合での特殊化はContainer<Content>型のイニシャライザの引数が、(content: Content)となっており、この引数に与えられる値の型が型引数として扱われる
+
+struct ContainerB<Content> {
+    var content: Content
+}
+
+let intContainerB = ContainerB(content: 1)
+let stringContainerB = ContainerB(content: "abc")
+
+// 型制約　
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
