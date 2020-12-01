@@ -334,34 +334,46 @@ struct ContainerB<Content> {
 let intContainerB = ContainerB(content: 1)
 let stringContainerB = ContainerB(content: "abc")
 
-// 型制約　
+// 型制約　-  型引数に対する制約
+// ジェネリック関数と同様に、ジェネリック型の型引数にも型制約を設けられる。しかし、使用できる型制約の種類や場所には、いくつかの違いはある
 
 
+//　型の定義で使用される型制約
+//　ジェネリック関数では、３つの種類の型制約を使用できていた、
+//　ジェネリック型の型の定義ではその3つのうち、型引数のスーパークラスや、準拠するプロトコルに対する制約が使用できる
+//　型引数のスーパークラスや準拠するプロトコルに対する制約を指定するには、型引数のあと：に続けてプロトコル名やスーパークラス名を指定する
+
+//struct　型名<型引数: プロトコル名やスーパークラス名>　{
+//    構造体の定義
+//}
 
 
+//　のこり2つの型制約である、連想型のスーパークラスや準拠するプロトコルに対する制約、型どうしの一致を要求する制約は、where節を必要とする型制約でしたが、
+//　これらはジェネリック型の定義では使用できない
 
+//　ジェネリック型の型制約付きのエクステンション
+//　ジェネリック型では、型引数が特定の条件を満たすのみ、有効となるエクステンションを定義でき、
+//　これを型制約付きのエクステンションと言える、ジェネリック型の型制約付きエクステンションを利用すると、
+//　型制約を満たす型が、持つプロパティやメソッドを使った機能を、汎用的に実装することができる
 
+//extension ジェネリック型名 where 型制約　{
+//   // 制約を満たす場合に有効となるエクステンション
+//}
+//
 
+// 型の定義では、型引数のスーパークラスや準拠するプロトコルに対する制約しか使用できないが、エクステンションでは全ての種類の型制約が使用できる
+//
 
+struct Pair<Element> {
+    let first: Element
+    let second: Element
+}
 
+extension Pair where Element == String {
+    func hasElement(containing character: Character) -> Bool {
+        return first.contains(character) || second.contains(character)
+    }
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+let stringPair = Pair(first: "abc", second: "def")
+stringPair.hasElement(containing: "e")
