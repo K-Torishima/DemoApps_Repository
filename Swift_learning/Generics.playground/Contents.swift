@@ -377,3 +377,37 @@ extension Pair where Element == String {
 
 let stringPair = Pair(first: "abc", second: "def")
 stringPair.hasElement(containing: "e")
+//　型制約つきエクステンションで定義したhasElement(containing)メソッドは、指定された文字が入った要素がペア内にあるかどうかを調べるメソッドで、その実装ではString型のcntains()メソッドを使用している
+//　型制約でElement型を限定することで、使用できるようになったプロパティやメソッドを使うのが、型制約付きエクステンションを定義する目的
+
+// プロトコルへの条件付き準拠
+
+//　ジェネリック型の型制約付きエクステンションでは、プロトコルへの準拠も可能である
+//　これをプロトコルへの条件つき準拠と言い、ジェネリック型は型引数が制約を満たすときのみ、プロトコルに準拠する
+
+
+//extension ジェネリック型名：　条件付き準拠するプロトコル名 where 型制約 {
+//    制約を満たす場合に有効となるエクステンション
+//}
+
+// プロトコルへの条件付き準拠が役に立つ典型的なケースは、型引数があるプロトコルに準拠する時に、元のジェネリック型も同じプロトコルに準拠させるケース。
+
+struct PairA<Element> {
+    let first: Element
+    let second: Element
+
+}
+
+extension PairA: Equatable where Element: Equatable {
+    static func ==(_ lhs: PairA, rhs: PairA) -> Bool {
+        return lhs.first == rhs.first && lhs.second == rhs.second
+    }
+}
+
+let stringPair1 = PairA(first: "abc", second: "def")
+let stringPair2 = PairA(first: "def", second: "ghi")
+let stringPair3 = PairA(first: "abc", second: "def")
+stringPair1 == stringPair2  // false
+stringPair1 == stringPair3  // true
+
+// もう少し深掘りしていろいろ書いていくと良さそう
