@@ -250,3 +250,179 @@ do {
 }
 
 
+//　ローカルスコープ実行中は、定数objectの値はまだ解放されていない
+//　しかし、スコープから抜けた1秒後では、定数objectの値はnilとなる
+
+
+//　unowned
+// weak同様に指定した場合、と同じような動きをするが、
+// 参照先のインスタンスが既に解放された場合も、unowedキーワードを指定してキャプチャした変数や定数の値はnilにならない
+// 参照先のインスタンスが解放された後にunownedキーワードが指定された変数や、定数へアクセスすると、不正アクセスになり、実行時errorを招く
+
+
+
+class SomeClassC {
+
+    let id: Int
+
+    init(id: Int) {
+        self.id = id
+    }
+}
+
+do {
+    let obj = SomeClassC(id: 42)
+
+    let closure = { [unowned obj] () -> Void in
+        print("objはまだ解放されていない: id => \(obj.id)")
+    }
+
+    print("ローカルスコープ内で実行: ", terminator: "")
+    closure()
+
+    let q = DispatchQueue.main
+
+    q.asyncAfter(deadline: .now() + 1) {
+        print("ローカルスコープ外で実行: ")
+        closure() //　ここの時点で実行時Errorになる
+    }
+}
+
+
+//　キャプチャリストの使い分け、
+
+/*
+循環参照を招かない参照
+ - クロージャの実行時に参照するインスタンスが必ず存在すべき場合は、キャプチャリストを使用しない
+ - クロージャの実行時に参照するインスタンスが存在しなくても良い場合は、weakキーワードを使用する
+
+循環参照を招く参照
+ - 参照するインスタンスが先に解放される可能性がある場合は、weakをつける
+ - 参照するインスタンスが先に解放される可能性がない場合は、weak or unownedをつける
+ 　（実行時にnilになることがない場合unownedをつけることで使用が明確になる）
+
+ */
+
+
+
+// escaping属性によるselfキーワードの必須化
+/*
+
+ escapingがある場合はselfを省略できない
+ selfをつけることで循環参照に気付きやすくなる
+ */
+
+class Executor {
+    let int = 0
+
+    var lastExecutedClosure: (() -> Void)? = nil
+
+    func execute(_ closure: @escaping () -> Void) {
+        closure()
+        lastExecutedClosure = closure
+    }
+
+    func executePrintInt() {
+        execute {
+            print(self.int)
+        }
+    }
+}
+
+/*
+
+ 上記CodeはexecutePrintInt()メソッド内のexecute(_:)メソッドの呼び出しでselfのキャプチャが行われ、
+ execute(_:)メソッド内ではキャプチャを行ったクロージャをストアドプロパティlastExecutedClosureに保存している
+ selfはストアドプロパティに保存されているため循環参照が発生している
+ 上記の例のクロージャ内では、selfを使用してintプロパティにアクセスしているため
+ selfがキャプチャされ、循環参照の可能性があることに気づきやすくなる
+ 逆に、もしselfを使用せずにintにアクセス可能だった場合、selfがキャプチャされていることに気づきにくい
+
+ */
+
+
+//　typealiasによる複雑なクロージャ型絵のアクセス
+//　型エイリアスを設定できる
+//　読みにくい引数の時はまとめたりできる
+
+func some(completion: (Int?, Error?, Array<String>?) -> Void) {}
+//　これは大変読みにくい
+
+typealias CompletionHandler = (Int?, Error?, Array<String>?) -> Void
+
+func method(completion: CompletionHandler) {}
+
+// 上記のようにすれば、何度も同じクロージャの方が出てくる場合もコードが煩雑（はんざつ）にならない
+//　また、クロージャが何を意味しているのかも型エイリアスで明確にわかる
+
+//　クロージャを利用すべき時
+// 処理の実行とコールバックを同じ箇所に記述する
+// デリゲートと比べると処理の流れが追いやすい
+//　完了イベントのみ受け取りたい時はコールバックで良い
+//　コールバックの種類がいくつもある場合はデリゲートを使った方が良い
+
+
+
+// オブザーバーパターン
+
+/*
+//　デリゲートパターンとクロージャーパターンは１対１のイベント通知でしか有効ではない
+//　1対多の場合はオブザーバーパターンが有効
+//　Notification型　NotificationCenter
+
+ 主なプロパティ
+
+ - name
+ - object
+ - userInfo
+
+ イベント通知は次のような手順で実装する
+
+ 通知を受け取るオブジェクトにNotification型の値を引数に持つメソッドを実装する
+ NotificationCenterクラスに通知を受け取るオブジェクトを登録する
+ NotificationCenterクラスに通知を投稿する
+
+*/
+
+
+//　通知を発生させるもの
+class Poster {
+
+    static let notificationName = Notification.Name("SomeNotification")
+
+    // 投稿
+    func post() {
+        NotificationCenter.default.post(
+            name: Poster.notificationName,
+            object: nil)
+    }
+}
+
+//　通知を受け取るもの
+class Observer {
+
+    // 登録
+    init() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(handleNotification(_:)),
+                                               name: Poster.notificationName,
+                                               object: nil)
+    }
+
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+
+    // これで通知を受け取っている
+    @objc func handleNotification(_ notification: Notification) {
+        print("通知を受け取りました")
+    }
+}
+
+var observer = Observer()
+let poster = Poster()
+poster.post()
+
+//　ここは今後コンバインで良くなるのであまり深掘りしなくても良い
+//　Rxだったらこれは出てこない
+
