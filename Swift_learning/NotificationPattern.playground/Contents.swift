@@ -148,4 +148,105 @@ game.start { result in
 }
 
 
+// キャプチャリスト　キャプチャ時の参照方法の制御
+
+/*
+
+ クロージャーのキャプチャとは、スコープに依存する変数や定数への参照を、クロージャでも保持することを言う
+ デフォルトでは、キャプチャはクラスのインスタンスへの今日参照となる
+ クロージャが解放されない限りはキャプチャされたクラスのインスタンスは解放されない
+
+ */
+
+
+import PlaygroundSupport
+import Dispatch
+
+PlaygroundPage.current.needsIndefiniteExecution = true
+
+
+class SomeClass {
+    let id: Int
+
+    init(id: Int) {
+        self.id = id
+    }
+
+    deinit {
+        print("deinit")
+    }
+}
+
+do {
+    let object = SomeClass(id: 42)
+
+    let queue = DispatchQueue.main
+
+    queue.asyncAfter(deadline: .now() + 3) {
+        print(object.id)
+    }
+}
+
+
+// キャプチャリストを用いることで、弱参照を持つことができる
+//　クロージャの開放状況に依存せずにクラスのインスタンスの解放が行われる
+//　キャプチャを弱参照にすることは、クロージャとキャプチャされたクラスのインスタンスの循環参照の解消にも役立つ
+//　weak 、unowed　を[] の中に書く
+
+
+print("_____________________________________")
+
+
+class SomeClassA {
+    let id: Int
+
+    init(id: Int) {
+        self.id = id
+    }
+}
+
+let object1 = SomeClassA(id: 42)
+let object2 = SomeClassA(id: 43)
+
+let closure = { [weak object1, unowned object2] () -> Void in
+    print(type(of: object1))
+    print(type(of: object2))
+}
+
+closure()
+
+//weakキーワード
+//　メモリ解放を想定した弱参照
+
+class SomeClassB {
+
+    let id: Int
+
+    init(id: Int) {
+        self.id = id
+    }
+}
+
+do {
+    let obj = SomeClassB(id: 42)
+
+    let closure = { [weak obj] () -> Void in
+        if let o = obj {
+            print("objはまだ解放されていない: id => \(o.id)")
+        } else {
+            print("objは既に解放されました")
+        }
+    }
+
+    print("ローカルスコープ内で実行: ", terminator: "")
+    closure()
+
+    let q = DispatchQueue.main
+
+    q.asyncAfter(deadline: .now() + 1) {
+        print("ローカルスコープ外で実行: ", terminator: "")
+        closure()
+    }
+}
+
 
