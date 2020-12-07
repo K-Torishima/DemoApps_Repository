@@ -170,17 +170,241 @@ case let .failure(error):
 }
 
 
+// 利用すべき時
+/*
+
+ Result型によるError処理を利用すべき点はどこか
+ - エラーの詳細を提供する
+ - 成功か失敗のいずれかであることを証明する
+ - 非同期処理のErrorを扱う
+
+ */
+
+
+//　do-catch
+
+// 実装方法
+//
+//do {
+//    throw文によるerror が発生する可能性のある処理
+//} catch {
+//    error 処理
+//    定数errorrを通じてerror値にアクセスできる
+//}
+//
+
+
+struct SomeError: Error {}
+
+do {
+    throw SomeError()
+    print("success")
+} catch {
+    print("Faile\(error)")
+}
+
+
+enum SomeErrorA: Error {
+    case error1
+    case error2(reason: String)
+}
+
+do {
+    throw SomeErrorA.error2(reason: "何かがおかしいようです")
+} catch SomeErrorA.error1 {
+    print("error1")
+} catch SomeErrorA.error2(let reason) {
+    print("error2: \(reason)")
+} catch {
+    print("Unknown error: \(error)")
+}
+
+// Errorプロトコル
+// throw文のerror を表現する型は、Errorプロトコルに準拠している必要がある
+// Errorプロトコルは準拠した型がerrorを表現する型として扱えることを示すためのプロトコルで、準拠するために必要な実装はない
+
+// Errorプロトコルに準拠する型は、列挙型として定義することが一般的である
+//　これは、発生するerrorを網羅的に記述できるというメリットがある
+//　errorの種類ごとに別の型を定義することが一般的である
+
+
+// ローカルDBにアクセスする際に発生するerrorはこちらに定義
+enum DatabaseErrorA: Error {
+    case entryNotFound
+    case duplicatedEntry
+    case invalidEntry(reason: String) // 連想値を利用することで、エラーに付随する情報を表現することもできる
+}
+
+//　通信を行う際に発生するerrorはこちらに定義
+enum NetworkError: Error {
+    case timedOut
+    case cancelled
+}
+
+//　throws
+//　関数、イニシャライザ、クロージャの定義にthowsを追加すると、それらの処理のなかでdo-catch文を用いずにthows文によるerrorを発生させることができる
+
+//func 関数名(引数) throws -> 戻り値の型 {
+//    throw文によるerrorが発生する可能性のある処理
+//}
+//
+
+enum OperationError: Error {
+    case overCapacity
+}
+
+
+func triple(of int: Int) throws -> Int {
+    guard int <= Int.max / 3 else {
+        throw OperationError.overCapacity
+    }
+
+    return int * 3
+}
+
+//　定数にthrowsキーワードを指定していない場合,do-catch文で囲まれていないthrow文によるエラーはコンパイルエラーとなる
+// 上記のtriple関数にthrowsキーワードが指定されてない場合コンパイルerrorになる
+
+/*
+func tripleError(of int: Int) -> Int {
+    guard int <= Int.max / 3 else {
+        // 関数にthrowsが指定されてないため
+        // do catchで囲まれてないthrow文によるerrorはコンパイルerror
+        throw OperationError.overCapacity
+    }
+    return int * 3
+}
+
+ */
+
+/*
+
+ throwsはイニシャライザにも使用できる
+ インスタンス化の途中に発生したerrorを呼び出し元に伝えることができる
+ */
+
+enum AgeError: Error {
+    case outOfRange
+}
+
+struct Teenager {
+    let age: Int
+
+    init(age: Int) throws {
+        guard case 13...19 = age else { throw AgeError.outOfRange
+
+        }
+
+        self.age = age
+    }
+}
+
+//　rethrows 引数のクロージャが発生させるerrorの呼び出し元への伝播
+//  クロージャが発生させるerror の処理を関数の呼び出し元に任せることができる
+
+
+struct SomeErrorC: Error {}
+
+func rethorwingFunction(_ throwingClosure: () throws -> Void) rethrows {
+    try throwingClosure()
+}
+
+do {
+    try rethorwingFunction {
+        throw SomeErrorC()
+    }
+} catch {
+    // 引数のクロージャが発生させるerrorを、関数の呼び出し元で処理
+    error // SomeError
+}
+
+
+//　関数内で、引数のクロージャが発生させるerror を処理し、別のerror を発生させることもできる
+//　例：引数throwingClosureが発生させるerror SomeError.originalErrorを処理し、catch節内で別の errorを発生させている
+
+enum SomeErrorD: Error {
+    case origialError
+    case convertedError
+}
 
 
 
+func rethorwingFunctionA(_ throwingClosure: () throws -> Void) rethrows {
+    do {
+        try throwingClosure()
+    } catch {
+        throw SomeErrorD.convertedError
+    }
+}
+
+do {
+    try rethorwingFunctionA {
+        throw SomeErrorD.origialError
+    }
+} catch {
+    error // ConvertedError
+}
 
 
+//　try エラーを発生させる可能性のある処理の実行
+
+/*
+
+ throwsを呼びたすには、それらの処理の呼び出しの前にtryを追加してtry関数名（引数）のように記述する
+ tryキーワードを用いた処理の呼び出しは、throwと同様に、do-catch文のdo節とtheowsキーワードが指定された処理の内部のみで使用する
+
+*/
+
+enum OperationErrorA: Error {
+    case overCapacity
+}
 
 
+func tripleA(of int: Int) throws -> Int {
+    guard int <= Int.max / 3 else {
+        throw OperationErrorA.overCapacity
+    }
+
+    return int * 3
+}
+
+let int = Int.max
+
+do {
+    let tripleOfInt = try tripleA(of: int)
+    print("Success: \(tripleOfInt)")
+} catch {
+    print("Error: \(error)")
+}
+
+// try! errorを無視できる
+
+// Int.maxだったら error は出る超えてしまっているのでだめ
+// 初めからerrorが出ないような値ならerrorは出ないので
+// do catch いらない
+
+let intA = 10
+let tripleOfIntA = try! tripleA(of: intA)
+print(tripleOfIntA)
+
+// try?
+// Errorをオプショナル型で表す処理の実行
+
+if let triple = try? tripleA(of: 9) {
+    print(triple)
+}
+
+// 失敗可能イニシャライザにも使える
+
+//deferによるerrorの有無にかかわらない処理の実行
+
+do {
+    defer {
+        print("second")
+    }
+    print("first")
+}
 
 
-
-
-
-
+//　利用するとき
 
