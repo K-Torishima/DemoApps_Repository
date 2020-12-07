@@ -106,5 +106,81 @@ if let user = UserA(id: 0, name: "koji", email: "koji@email.com") {
 
 
 //　Result型
+/*
+
+ Success  成功の値
+ Failure　errorの型
+
+ */
+
+
+//　実装方法
+//　SwiftにはErrorプロトコルがある
+// Result<Success,Failure>型の型引数Failureはerrorを表すため、Errorプロトコルに準拠している
+
+
+enum DatabaseError: Error {
+    /// データが見つからないerror
+    case entryNotFound
+    /// 重複したデータによるerror
+    case duplicatedEntry
+    /// 不正なデータによるerror
+    case invalidEntry(reason: String)
+}
+
+
+struct UserD {
+    let id: Int
+    let name: String
+    let email: String
+}
+
+
+func findUserA(byID id: Int) -> Result<UserD, DatabaseError> {
+    let users = [
+        UserD(id: 1, name: "koji", email: "koji@email.com"),
+        UserD(id: 2, name: "kenta", email: "kenta@email.com"),
+    ]
+
+    for user in users {
+        if user.id == id {
+            return .success(user)
+        }
+    }
+
+    return .failure(.entryNotFound)
+}
+
+
+let idA = 1
+let result = findUserA(byID: idA)
+
+switch result {
+case let .success(user):
+    print(".success: \(user)")
+case let .failure(error):
+    switch error {
+    case .entryNotFound:
+        print(".failure: .entryNotFound")
+    case .duplicatedEntry:
+        print(".failure: .duplicatedEntry")
+    case .invalidEntry(let reason):
+        print(".faiure: .invalidEntry(\(reason))")
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
