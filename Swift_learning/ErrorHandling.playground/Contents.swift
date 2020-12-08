@@ -555,3 +555,74 @@ let aaaa = title(forButtonAt: 0)
 // アサーション
 
 //　assert() 条件を満たさない場合に終了する
+//　実装される際に満たされるべき条件を宣言するための関数
+//　この関数の実行時に条件が満たされない場合プログラムを実行する
+
+//　条件式がtrue の時は、通常通り後続の処理が実行されるが、falseの時は実行errorが発生してプログラムを実行する
+//　リリースビルドの時は効果がないので、Never型ではない
+
+func format(minute: Int, second: Int) -> String {
+    assert(second < 60, "secondは60未満に設定してください")
+    return "\(minute) 分 \(second)秒"
+}
+
+format(minute: 24, second: 48)
+// format(minute: 24, second: 90) // 実行時errorr
+//　error: Execution was interrupted, reason: EXC_BAD_INSTRUCTION (code=EXC_I386_INVOP, subcode=0x0).
+
+
+// assertionFailure()　必ず終了する
+//　条件を持たない常に失敗するもの
+//　実行されること自体が条件を満たしてないので、第一引数にfalseをとるassertと等価
+//　fatelErrorと同様に、その箇所が実行されること自体が想定外となる
+
+func printSeason(forMonth month: Int) {
+    switch month {
+    case 1...2, 12:
+        print("冬")
+    case 3...5:
+        print("春")
+    case 6...8:
+        print("夏")
+    case 9...11:
+        print("秋")
+    default:
+        assertionFailure("monthには1から12までの値を設定してください")
+    }
+}
+
+// これは条件網羅すればいらなそう
+
+printSeason(forMonth: 11)
+printSeason(forMonth: 12)
+printSeason(forMonth: 13)
+// Assertion failed: secondは60未満に設定してください: file __lldb_expr_31/ErrorHandling.playground, line 565
+
+
+// コンパイルの最適化ラベル
+// デバック時、アサーションは有効で、リリース時には無効
+
+
+//　使う時
+// リリース時には想定外の状況でも、プログラムの実行を継続する
+//　fatalErrorとの使い分けが必要
+
+
+// 今までのものの使い分け
+
+/*
+ - optional:
+    エラーの詳細情報が不要で結果の成否によってエラーを扱える場合
+ - Result:
+    非同期の場合
+ - do catch:
+    同期処理の場合
+ - fatalError:
+    エラー発生時にプログラムの実行を終了したい場合
+ - アサーション:
+    デバック時のみ、エラー発生時にプログラムの実行を終了したい時
+
+ */
+
+
+
