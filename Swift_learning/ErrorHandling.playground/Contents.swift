@@ -407,4 +407,151 @@ do {
 
 
 //　利用するとき
+//　do catchを利用するとき
 
+// Errorの詳細を提供する
+
+enum DatabaseErrorE: Error {
+    case entryNotFound
+    case duplicatedEntry
+    case invalidEntry(reason: String)
+}
+
+struct UserE {
+    let id: Int
+    let name: String
+    let email: String
+}
+
+func findUserB(byID id: Int) -> Result<UserE, DatabaseErrorE> {
+    let users = [
+        UserE(id: 1, name: "koji", email: "koji@gmail.com"),
+        UserE(id: 2, name: "kenta", email: "kenta@gmail.com"),
+
+    ]
+
+
+    for user in users {
+        if user.id == id {
+            return .success(user)
+        }
+    }
+
+    return .failure(.entryNotFound)
+}
+
+func localPart(fromEmail email: String) -> Result<String, DatabaseErrorE> {
+    let components = email.components(separatedBy: "@")
+
+    guard components.count == 2 else {
+        return .failure(.invalidEntry(reason: "Invalid email address"))
+    }
+
+    return .success(components[0])
+}
+
+let userID = 1
+
+switch findUserB(byID: userID) {
+case .success(let user):
+    switch localPart(fromEmail: user.email) {
+    case .success(let localPart):
+        print("Local part: \(localPart)")
+    case .failure(let error):
+        print("Error: \(error)")
+    }
+case .failure(let error):
+    print("Error: \(error)")
+}
+
+//　上記のCodeをdo catchでリファクタ
+
+
+func findUserC(byID id: Int) throws -> UserE  {
+    let users = [
+        UserE(id: 1, name: "koji", email: "koji@gmail.com"),
+        UserE(id: 2, name: "kenta", email: "kenta@gmail.com"),
+
+    ]
+
+
+    for user in users {
+        if user.id == id {
+            return user
+        }
+    }
+
+    throw DatabaseErrorE.entryNotFound
+}
+
+
+func localPartA(fromEmail email: String) throws -> String {
+    let components = email.components(separatedBy: "@")
+
+    guard components.count == 2 else {
+        throw DatabaseErrorE.invalidEntry(reason: "Invalid email address")
+    }
+    return components[0]
+}
+
+let userIDA = 1
+
+do {
+    let user = try findUserC(byID: userIDA)
+    let localPartOfEmail = try localPartA(fromEmail: user.email)
+    print("Local part: \(localPartOfEmail)")
+} catch {
+    print("Error: \(error)")
+}
+
+
+// 上記の方がより命令的、直感的なCodeと言える
+
+//　error処理を強制する
+//　なんかいろいろあるが実践でいろいろ見ていくと良さそう
+
+
+
+// fatalError関数によるプログラムの終了
+//　fatelError
+//　実行されること自体が、想定外であることを宣言するための関数
+//　これが呼ばれると、プログラムは終了する
+
+
+//　実装方法
+//　fatelError("想定しないerrorが発生したため、プログラムを終了します")
+
+//　Never型　値を返さないことを示す型
+
+func aaa() -> Int {
+    fatalError("まだ実装されてない")
+    // Never型なので戻り値書かなくて良い
+}
+
+//　よくある実装
+
+//enum Index: Int {
+//    case red = 0
+//    case blue = 1
+//    case yellow = 2
+//}
+
+
+func title(forButtonAt index: Int) -> String {
+    switch index {
+    case 0:
+        return "赤"
+    case 1:
+        return "青"
+    case 2:
+        return "黄色"
+    default:
+        fatalError("想定外のボタンインデックス\(index)を受け取りました")
+    }
+}
+
+let aaaa = title(forButtonAt: 0)
+
+// アサーション
+
+//　assert() 条件を満たさない場合に終了する
