@@ -1,0 +1,16 @@
+PODS:
+  - Instantiate (4.0.0)
+
+DEPENDENCIES:
+  - Instantiate
+
+SPEC REPOS:
+  trunk:
+    - Instantiate
+
+SPEC CHECKSUMS:
+  Instantiate: 62516e7dde448721c1f5815a9ee7e0669d034d52
+
+PODFILE CHECKSUM: 205a08772df81acc318e167fdfa85a9217c4f1de
+
+COCOAPODS: 1.10.0
