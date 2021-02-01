@@ -18,7 +18,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        delegate = self
+        self.delegate = self
     }
 
     @IBAction func tapBtn(_ sender: Any) {
