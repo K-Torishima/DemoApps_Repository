@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="degate" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tRt-QN-1tU">
+                                <rect key="frame" x="0.0" y="164" width="414" height="578"/>
+                                <color key="backgroundColor" red="0.30588235289999999" green="0.65098039220000004" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <connections>
+                                    <segue destination="8gH-Vv-Ht5" kind="embed" id="Mbd-OE-HWN"/>
+                                </connections>
+                            </containerView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oR7-c5-UB3">
+                                <rect key="frame" x="10" y="84" width="394" height="30"/>
+                                <color key="backgroundColor" red="0.30588235289999999" green="0.65098039220000004" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="Button"/>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="tRt-QN-1tU" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="4Oi-m0-EMv"/>
+                            <constraint firstItem="oR7-c5-UB3" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="10" id="EBX-yg-Zu7"/>
+                            <constraint firstItem="tRt-QN-1tU" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="XwQ-mt-EnX"/>
+                            <constraint firstItem="oR7-c5-UB3" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="40" id="jsz-rY-KeZ"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="oR7-c5-UB3" secondAttribute="trailing" constant="10" id="oWm-lD-XHl"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="tRt-QN-1tU" secondAttribute="bottom" constant="120" id="pkE-ba-gmn"/>
+                            <constraint firstItem="tRt-QN-1tU" firstAttribute="top" secondItem="oR7-c5-UB3" secondAttribute="bottom" constant="50" id="xd2-Op-XN9"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="18.840579710144929" y="92.410714285714278"/>
+        </scene>
+        <!--Container View Controller-->
+        <scene sceneID="Q2G-Ay-dOd">
+            <objects>
+                <viewController id="8gH-Vv-Ht5" customClass="ContainerViewController" customModule="degate" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="clP-C2-pyj">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="578"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="q6b-he-KRd">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="578"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="q6b-he-KRd" secondAttribute="bottom" id="2du-Xp-AdT"/>
+                            <constraint firstItem="q6b-he-KRd" firstAttribute="leading" secondItem="clP-C2-pyj" secondAttribute="leading" id="9Rt-YD-IHZ"/>
+                            <constraint firstItem="q6b-he-KRd" firstAttribute="top" secondItem="clP-C2-pyj" secondAttribute="top" id="Nr4-BU-N3M"/>
+                            <constraint firstAttribute="trailing" secondItem="q6b-he-KRd" secondAttribute="trailing" id="Va9-pf-3rc"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="A9A-DA-wFE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="781" y="92"/>
+        </scene>
+    </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
