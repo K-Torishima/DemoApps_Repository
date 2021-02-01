@@ -16,31 +16,34 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tRt-QN-1tU">
-                                <rect key="frame" x="0.0" y="164" width="414" height="578"/>
-                                <color key="backgroundColor" red="0.30588235289999999" green="0.65098039220000004" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <connections>
-                                    <segue destination="8gH-Vv-Ht5" kind="embed" id="Mbd-OE-HWN"/>
-                                </connections>
-                            </containerView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oR7-c5-UB3">
                                 <rect key="frame" x="10" y="84" width="394" height="30"/>
                                 <color key="backgroundColor" red="0.30588235289999999" green="0.65098039220000004" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="tapBtn:" destination="BYZ-38-t0r" eventType="touchUpInside" id="XIg-1a-bJa"/>
+                                </connections>
                             </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dFY-ka-FAm">
+                                <rect key="frame" x="20" y="134" width="374" height="708"/>
+                                <color key="backgroundColor" systemColor="systemGrayColor"/>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="tRt-QN-1tU" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="4Oi-m0-EMv"/>
+                            <constraint firstItem="dFY-ka-FAm" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="Afn-9p-TLA"/>
                             <constraint firstItem="oR7-c5-UB3" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="10" id="EBX-yg-Zu7"/>
-                            <constraint firstItem="tRt-QN-1tU" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="XwQ-mt-EnX"/>
                             <constraint firstItem="oR7-c5-UB3" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="40" id="jsz-rY-KeZ"/>
+                            <constraint firstItem="dFY-ka-FAm" firstAttribute="top" secondItem="oR7-c5-UB3" secondAttribute="bottom" constant="20" id="mMM-ss-I9c"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="oR7-c5-UB3" secondAttribute="trailing" constant="10" id="oWm-lD-XHl"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="tRt-QN-1tU" secondAttribute="bottom" constant="120" id="pkE-ba-gmn"/>
-                            <constraint firstItem="tRt-QN-1tU" firstAttribute="top" secondItem="oR7-c5-UB3" secondAttribute="bottom" constant="50" id="xd2-Op-XN9"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="dFY-ka-FAm" secondAttribute="bottom" constant="20" id="uaO-TQ-flt"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="dFY-ka-FAm" secondAttribute="trailing" constant="20" id="vj1-a5-X5X"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="subView" destination="dFY-ka-FAm" id="s1d-Cn-o6k"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
@@ -51,17 +54,18 @@
             <objects>
                 <viewController id="8gH-Vv-Ht5" customClass="ContainerViewController" customModule="degate" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="clP-C2-pyj">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="578"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="q6b-he-KRd">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="578"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="796"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </tableView>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="Obs-7u-76S"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="q6b-he-KRd" secondAttribute="bottom" id="2du-Xp-AdT"/>
+                            <constraint firstAttribute="bottom" secondItem="q6b-he-KRd" secondAttribute="bottom" constant="100" id="2du-Xp-AdT"/>
                             <constraint firstItem="q6b-he-KRd" firstAttribute="leading" secondItem="clP-C2-pyj" secondAttribute="leading" id="9Rt-YD-IHZ"/>
                             <constraint firstItem="q6b-he-KRd" firstAttribute="top" secondItem="clP-C2-pyj" secondAttribute="top" id="Nr4-BU-N3M"/>
                             <constraint firstAttribute="trailing" secondItem="q6b-he-KRd" secondAttribute="trailing" id="Va9-pf-3rc"/>
@@ -73,12 +77,33 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="A9A-DA-wFE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="781" y="92"/>
+            <point key="canvasLocation" x="1652" y="92"/>
+        </scene>
+        <!--Container View Controller2-->
+        <scene sceneID="Uie-Dz-0dA">
+            <objects>
+                <viewController id="rlt-Gq-O3a" customClass="ContainerViewController2" customModule="degate" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="lqb-3i-Qh6">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="OaT-dx-Gmx"/>
+                        <color key="backgroundColor" systemColor="systemGreenColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9VX-vQ-zam" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1007" y="92"/>
         </scene>
     </scenes>
     <resources>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGrayColor">
+            <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemGreenColor">
+            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
