@@ -15,6 +15,7 @@
 		7DF740FB25D00CE60015B0E8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7DF740F925D00CE60015B0E8 /* LaunchScreen.storyboard */; };
 		7DF7410625D00CE60015B0E8 /* MapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DF7410525D00CE60015B0E8 /* MapTests.swift */; };
 		7DF7411125D00CE60015B0E8 /* MapUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DF7411025D00CE60015B0E8 /* MapUITests.swift */; };
+		7DF7412625D00DD90015B0E8 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DF7412525D00DD90015B0E8 /* MapKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		7DF7410C25D00CE60015B0E8 /* MapUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MapUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7DF7411025D00CE60015B0E8 /* MapUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapUITests.swift; sourceTree = "<group>"; };
 		7DF7411225D00CE60015B0E8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7DF7412525D00DD90015B0E8 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +58,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7DF7412625D00DD90015B0E8 /* MapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -83,6 +86,7 @@
 				7DF7410425D00CE60015B0E8 /* MapTests */,
 				7DF7410F25D00CE60015B0E8 /* MapUITests */,
 				7DF740EC25D00CE30015B0E8 /* Products */,
+				7DF7412425D00DD90015B0E8 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -126,6 +130,14 @@
 				7DF7411225D00CE60015B0E8 /* Info.plist */,
 			);
 			path = MapUITests;
+			sourceTree = "<group>";
+		};
+		7DF7412425D00DD90015B0E8 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7DF7412525D00DD90015B0E8 /* MapKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
