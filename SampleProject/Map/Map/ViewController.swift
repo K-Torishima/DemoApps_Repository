@@ -246,10 +246,14 @@ struct Map {
 extension ViewController {
     
     func search() {
-        let coordinate = CLLocationCoordinate2DMake(35.6598051, 139.7036661) // 渋谷ヒカリエ
-        let region = MKCoordinateRegion(center: coordinate, latitudinalMeters: 1000.0, longitudinalMeters: 1000.0) // 1km * 1km
+//        let coordinate = CLLocationCoordinate2DMake(35.6598051, 139.7036661) // 渋谷ヒカリエ
+//        let region = MKCoordinateRegion(center: coordinate, latitudinalMeters: 1000.0, longitudinalMeters: 1000.0) // 1km * 1km
+        let tokyoStation = CLLocationCoordinate2DMake(35.681236, 139.767125)
+        let span = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
+        let region = MKCoordinateRegion(center: tokyoStation, span: span)
+        mapView.region = region
         
-        Map.search(query: "駅", region: region) { (res) in
+        Map.search(query: "コンビニ", region: region) { (res) in
             switch res {
             case .success(let mapItems):
                 for map in mapItems {
