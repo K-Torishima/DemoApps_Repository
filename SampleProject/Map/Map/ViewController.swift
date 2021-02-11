@@ -242,6 +242,7 @@ struct Map {
     }
 }
 
+// 以前より精度が上がっている
 extension ViewController {
     
     func search() {
