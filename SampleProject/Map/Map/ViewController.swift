@@ -25,9 +25,10 @@ class ViewController: UIViewController {
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
         
-        getNawLoc()
-        createPin()
-        mapViewTapedEditPin()
+//        getNawLoc()
+//        createPin()
+//        mapViewTapedEditPin()
+        search()
        
     }
     
@@ -208,3 +209,62 @@ extension ViewController {
         }
     }
 }
+
+
+extension MKPlacemark {
+    var address: String {
+        let components = [self.administrativeArea, self.locality, self.thoroughfare, self.subThoroughfare]
+        return components.compactMap { $0 }.joined(separator: "")
+    }
+}
+
+struct Map {
+    enum Result<T> {
+        case success(T)
+        case failure(Error)
+    }
+    
+    static func search(query: String, region: MKCoordinateRegion? = nil, completionHandler: @escaping (Result<[MKMapItem]>) -> Void) {
+        let request = MKLocalSearch.Request()
+        request.naturalLanguageQuery = query
+        
+        if let region = region {
+            request.region = region
+        }
+        
+        MKLocalSearch(request: request).start { (response, error) in
+            if let error = error {
+                completionHandler(.failure(error))
+                return
+            }
+            completionHandler(.success(response?.mapItems ?? []))
+        }
+    }
+}
+
+extension ViewController {
+    
+    func search() {
+        let coordinate = CLLocationCoordinate2DMake(35.6598051, 139.7036661) // 渋谷ヒカリエ
+        let region = MKCoordinateRegion(center: coordinate, latitudinalMeters: 1000.0, longitudinalMeters: 1000.0) // 1km * 1km
+        
+        Map.search(query: "駅", region: region) { (res) in
+            switch res {
+            case .success(let mapItems):
+                for map in mapItems {
+                    print("name: \(map.name ?? "no name")")
+                    print("coordinate: \(map.placemark.coordinate.latitude) \(map.placemark.coordinate.latitude)")
+                    print("address \(map.placemark.address)")
+                    
+                    let annotation = MKPointAnnotation()
+                    annotation.coordinate = map.placemark.coordinate
+                    annotation.title = map.name
+                    self.mapView.addAnnotation(annotation)
+                }
+            case .failure(let error):
+                print("error \(error.localizedDescription)")
+            }
+        }
+    }
+}
+
