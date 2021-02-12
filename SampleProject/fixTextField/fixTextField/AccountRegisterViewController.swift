@@ -7,6 +7,8 @@
 
 import UIKit
 
+// クラスの名前をViewContoroller　→　AccountRegisterViewControllerに変える発生する
+
 class AccountRegisterViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var f1: UITextField!
     @IBOutlet weak var f2: UITextField!
