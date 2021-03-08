@@ -7,7 +7,8 @@
 
 import UIKit
 
-class BaseViewController: UIViewController {
+// PaggeViewだとチラ見せすることはできないかも
+class PageViewController: UIViewController {
     
     private var pageViewController: UIPageViewController!
     private var viewControllers:[UIViewController] = []
@@ -29,7 +30,7 @@ class BaseViewController: UIViewController {
             self.viewControllers.append(item)
         }
         
-        pageViewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
+        pageViewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: [UIPageViewController.OptionsKey.interPageSpacing : 20])
         pageViewController.setViewControllers([self.viewControllers[0]], direction: .forward, animated: true, completion: nil)
         pageViewController.delegate = self
         pageViewController.dataSource = self
@@ -60,7 +61,7 @@ class BaseViewController: UIViewController {
 }
 
 // MARK:- Delegate DataSource
-extension BaseViewController: UIPageViewControllerDataSource {
+extension PageViewController: UIPageViewControllerDataSource {
     func presentationCount(for pageViewController: UIPageViewController) -> Int {
         viewControllers.count
     }
@@ -82,7 +83,7 @@ extension BaseViewController: UIPageViewControllerDataSource {
     }
 }
 
-extension BaseViewController: UIPageViewControllerDelegate {
+extension PageViewController: UIPageViewControllerDelegate {
     func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
         let currentPage = pageViewController.viewControllers![0]
         pageControl.currentPage = viewControllers.firstIndex(of: currentPage)!
