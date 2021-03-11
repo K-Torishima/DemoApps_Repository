@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7D3B0D1825FA065800C89971 /* protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D3B0D1725FA065800C89971 /* protocol.swift */; };
 		A2ACDF4525F7AF980042345E /* FlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2ACDF4425F7AF980042345E /* FlowLayout.swift */; };
 		A2CE75AB25F658CF00BCE024 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2CE75AA25F658CF00BCE024 /* AppDelegate.swift */; };
 		A2CE75AD25F658CF00BCE024 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2CE75AC25F658CF00BCE024 /* SceneDelegate.swift */; };
@@ -38,6 +39,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7D3B0D1725FA065800C89971 /* protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = protocol.swift; sourceTree = "<group>"; };
 		A2ACDF4425F7AF980042345E /* FlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowLayout.swift; sourceTree = "<group>"; };
 		A2CE75A725F658CF00BCE024 /* CollectionPageView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CollectionPageView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2CE75AA25F658CF00BCE024 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -107,6 +109,7 @@
 			children = (
 				A2CE75AA25F658CF00BCE024 /* AppDelegate.swift */,
 				A2CE75AC25F658CF00BCE024 /* SceneDelegate.swift */,
+				7D3B0D1725FA065800C89971 /* protocol.swift */,
 				A2CE75AE25F658CF00BCE024 /* ViewController.swift */,
 				A2CE75B025F658CF00BCE024 /* Main.storyboard */,
 				A2CE75E025F65EB400BCE024 /* CollectionViewCell.swift */,
@@ -269,6 +272,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A2CE75AF25F658CF00BCE024 /* ViewController.swift in Sources */,
+				7D3B0D1825FA065800C89971 /* protocol.swift in Sources */,
 				A2CE75AB25F658CF00BCE024 /* AppDelegate.swift in Sources */,
 				A2ACDF4525F7AF980042345E /* FlowLayout.swift in Sources */,
 				A2CE75E225F65EB400BCE024 /* CollectionViewCell.swift in Sources */,
