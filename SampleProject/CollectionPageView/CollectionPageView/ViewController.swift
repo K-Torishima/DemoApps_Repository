@@ -78,7 +78,6 @@ extension ViewController: UIScrollViewDelegate {
                 }
             }
         }
-        
     }
     
     
