@@ -10,6 +10,7 @@ import UIKit
 class ViewController: UIViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
+    private var contentCells: [UICollectionViewCell] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,7 +48,10 @@ extension ViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionViewCell", for: indexPath) as! CollectionViewCell
-        cell.delegate = self
+        contentCells.append(cell)
+        if indexPath.row == .zero {
+            cell.backgroundColor = .black
+        }
         return cell
     }
 }
@@ -60,16 +64,30 @@ extension ViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
-extension ViewController: testDelegate {
-    func testPrint() {
-        print("test")
-    }
-    
+extension ViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        print("スクロール中")
+        // 現在の完全に表示されているCellを取得
+        let visibleCells = collectionView.visibleCells.filter { return collectionView.bounds.contains($0.frame) }
+        // CollectionViewCellと完全に表示されているCellを比較し、完全に表示されているCellのみborderColorをBooklogBlueにする
+        contentCells.forEach { cell in
+            visibleCells.forEach { visibleCell in
+                if cell != visibleCell {
+                    cellColor(cell: cell)
+                } else {
+                    cellUnColor(cell: visibleCell)
+                }
+            }
+        }
+        
     }
     
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        print("終了")
+    
+    func cellColor(cell: UICollectionViewCell) {
+        cell.backgroundColor = .white
     }
+    
+    func cellUnColor(cell: UICollectionViewCell) {
+        cell.backgroundColor = .black
+    }
+    
 }

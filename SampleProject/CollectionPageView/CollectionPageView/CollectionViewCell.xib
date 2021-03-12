@@ -4,7 +4,6 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -16,30 +15,10 @@
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                 <rect key="frame" x="0.0" y="0.0" width="145" height="153"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                <subviews>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Me-f8-aI1">
-                        <rect key="frame" x="0.0" y="0.0" width="145" height="153"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                </subviews>
             </view>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
-            <constraints>
-                <constraint firstAttribute="trailing" secondItem="5Me-f8-aI1" secondAttribute="trailing" id="4ZT-bh-hI2"/>
-                <constraint firstItem="5Me-f8-aI1" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="7ai-NA-Ubh"/>
-                <constraint firstAttribute="bottom" secondItem="5Me-f8-aI1" secondAttribute="bottom" id="EqJ-w7-AjV"/>
-                <constraint firstItem="5Me-f8-aI1" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="GCr-2V-Efc"/>
-            </constraints>
             <size key="customSize" width="145" height="153"/>
-            <connections>
-                <outlet property="baseView" destination="5Me-f8-aI1" id="IUb-th-PyX"/>
-            </connections>
             <point key="canvasLocation" x="206.52173913043481" y="134.26339285714286"/>
         </collectionViewCell>
     </objects>
-    <resources>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-    </resources>
 </document>
