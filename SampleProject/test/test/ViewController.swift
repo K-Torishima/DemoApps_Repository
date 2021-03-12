@@ -12,7 +12,6 @@ class ViewController: UIViewController, TestDelegate {
     
     @IBOutlet weak var customView: CustomView!
     
-
     override func viewDidLoad() {
         super.viewDidLoad()
         customView.delegate = self
@@ -21,6 +20,11 @@ class ViewController: UIViewController, TestDelegate {
     func test() {
         print("テストです")
         view.backgroundColor = .brown
+    }
+    
+    @IBAction func tap(_ sender: Any) {
+        customView.testVC()
+        
     }
 }
 

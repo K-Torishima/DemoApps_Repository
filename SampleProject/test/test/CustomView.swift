@@ -5,7 +5,7 @@
 //  Created by 鳥嶋 晃次 on 2021/03/11.
 //
 
-protocol TestDelegate: class  {
+protocol TestDelegate: class {
     func test()
 }
 
@@ -15,6 +15,7 @@ class CustomView: UIView {
     
     weak var delegate: TestDelegate?
     
+    @IBOutlet weak var button: UIButton!
     override init(frame: CGRect) {
            super.init(frame: frame)
            loadNib()
@@ -25,14 +26,21 @@ class CustomView: UIView {
            loadNib()
        }
        
-       private func loadNib() {
-           if let view = Bundle.main.loadNibNamed(String(describing: type(of: self)), owner: self)?.first as? UIView {
-               view.frame = self.bounds
-               self.addSubview(view)
-           }
-       }
+    private func loadNib() {
+        if let view = Bundle.main.loadNibNamed(String(describing: type(of: self)), owner: self)?.first as? UIView {
+            view.frame = self.bounds
+            self.addSubview(view)
+        }
+    }
     
     @IBAction func tap(_ sender: Any) {
         delegate?.test()
+    }
+}
+
+extension CustomView {
+    func testVC() {
+        print("vcから読んでいる")
+        button.backgroundColor = .red
     }
 }
