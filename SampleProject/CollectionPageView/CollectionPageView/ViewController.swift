@@ -21,6 +21,8 @@ class ViewController: UIViewController {
         
         let nib = UINib(nibName: "CollectionViewCell", bundle: nil)
         collectionView.register(nib, forCellWithReuseIdentifier: "CollectionViewCell")
+        let nib2 = UINib(nibName: "CollectionViewCell2", bundle: nil)
+        collectionView.register(nib2,forCellWithReuseIdentifier: "CollectionViewCell2")
     }
     
     
@@ -43,16 +45,30 @@ extension ViewController: UICollectionViewDelegate {
 
 extension ViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        10
+        3
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionViewCell", for: indexPath) as! CollectionViewCell
-        contentCells.append(cell)
-        if indexPath.row == .zero {
-            cell.backgroundColor = .black
+        switch indexPath.row {
+        case 0:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionViewCell", for: indexPath) as! CollectionViewCell
+            contentCells.append(cell)
+            if indexPath.row == .zero {
+                cell.backgroundColor = .black
+            }
+            return cell
+        case 1:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionViewCell2", for: indexPath) as! CollectionViewCell2
+            return cell
+        
+        default:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionViewCell", for: indexPath) as! CollectionViewCell
+            contentCells.append(cell)
+            if indexPath.row == .zero {
+                cell.backgroundColor = .black
+            }
+            return cell
         }
-        return cell
     }
 }
 

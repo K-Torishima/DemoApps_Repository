@@ -25,6 +25,9 @@ class CollectionViewCell: UICollectionViewCell {
         
     }
 }
+
+
+
 // タップしたらハイライトする　話したら戻る
 //    override var isHighlighted: Bool {
 //        didSet {
