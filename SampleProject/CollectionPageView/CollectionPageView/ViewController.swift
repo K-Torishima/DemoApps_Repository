@@ -49,26 +49,37 @@ extension ViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        switch indexPath.row {
-        case 0:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionViewCell", for: indexPath) as! CollectionViewCell
-            contentCells.append(cell)
-            if indexPath.row == .zero {
-                cell.backgroundColor = .black
-            }
-            return cell
-        case 1:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionViewCell2", for: indexPath) as! CollectionViewCell2
-            return cell
-        
-        default:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionViewCell", for: indexPath) as! CollectionViewCell
-            contentCells.append(cell)
-            if indexPath.row == .zero {
-                cell.backgroundColor = .black
-            }
-            return cell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionViewCell", for: indexPath) as! CollectionViewCell
+        contentCells.append(cell)
+        if indexPath.row == .zero {
+            cell.backgroundColor = .cyan
         }
+        return cell
+        
+        
+//        switch indexPath.row {
+//        case 0:
+//            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionViewCell", for: indexPath) as! CollectionViewCell
+//            contentCells.append(cell)
+//            if indexPath.row == .zero {
+//                cell.backgroundColor = .black
+//            }
+//            return cell
+//        case 1:
+//            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionViewCell2", for: indexPath) as! CollectionViewCell2
+//            return cell
+//
+//        default:
+//            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionViewCell", for: indexPath) as! CollectionViewCell
+//            contentCells.append(cell)
+//            if indexPath.row == .zero {
+//                cell.backgroundColor = .black
+//            }
+//            return cell
+        
+        
+        
+        
     }
 }
 
@@ -76,7 +87,6 @@ extension ViewController: UICollectionViewDelegateFlowLayout {
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         let collectionView = scrollView as! UICollectionView
         (collectionView.collectionViewLayout as! FlowLayout).prepareForPaging()
-        print("スクロール開始")
     }
 }
 
@@ -102,7 +112,7 @@ extension ViewController: UIScrollViewDelegate {
     }
     
     func cellUnColor(cell: UICollectionViewCell) {
-        cell.backgroundColor = .black
+        cell.backgroundColor = .cyan
     }
     
 }
