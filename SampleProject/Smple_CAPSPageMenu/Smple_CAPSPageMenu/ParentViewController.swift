@@ -25,9 +25,12 @@ class ParentViewController: UIViewController {
         // firstはこれでセンターになる
         // secondはセンターにならない
         // secondをセンターにするには、------漢字------ と書かなければならない
-        firstVC.title = "漢字            "
-        secondVC.title = "漢字------------"
-        thirdVC.title = "--ここは任意のタイトルを入れる--"
+        let space12 = String(repeating: " ", count: 12) // スペースを12とる　表現は左右均等になるので、　６sp title 6sp になる
+        let spaseHyphen = String(repeating: "-", count: 12)
+        let space4 = String(repeating: " ", count: 4)
+        firstVC.title = "漢字" + space12
+        secondVC.title = "漢字" + spaseHyphen
+        thirdVC.title = "ここは任意のタイトルを入れる" + space4
         
         let controllers: [UIViewController] = [firstVC, secondVC, thirdVC]
         
