@@ -20,9 +20,13 @@ class ParentViewController: UIViewController {
     }
     
     private func setup() {
-        // - はスペースが何個あるか
-        firstVC.title = "------漢字------"
-        secondVC.title = "------漢字------"
+        // - は半角スペースが何個あるか
+        //  上と下は同じに見えるが違う
+        // firstはこれでセンターになる
+        // secondはセンターにならない
+        // secondをセンターにするには、------漢字------ と書かなければならない
+        firstVC.title = "漢字            "
+        secondVC.title = "漢字------------"
         thirdVC.title = "--ここは任意のタイトルを入れる--"
         
         let controllers: [UIViewController] = [firstVC, secondVC, thirdVC]
@@ -41,7 +45,7 @@ class ParentViewController: UIViewController {
             .menuItemWidthBasedOnTitleTextWidth(true), // タイトルのテキストに沿って可変するのをONにするかしないか
 //            .menuItemWidth(140),
             .menuItemSeparatorRoundEdges(true),
-            .centerMenuItems(false)
+            .centerMenuItems(true)
         ]
         
         pageMenu = CAPSPageMenu(viewControllers: controllers,
