@@ -20,10 +20,10 @@ class ParentViewController: UIViewController {
     }
     
     private func setup() {
-        // タイトルの両端にタブを入れるよバランスが良くなる
-        firstVC.title = "\t新着\t"
-        secondVC.title = "\t人気\t"
-        thirdVC.title = "\t新しい生活に勇気を与えてくれた３冊\t"
+        // - はスペースが何個あるか
+        firstVC.title = "------漢字------"
+        secondVC.title = "------漢字------"
+        thirdVC.title = "--ここは任意のタイトルを入れる--"
         
         let controllers: [UIViewController] = [firstVC, secondVC, thirdVC]
         
@@ -39,9 +39,9 @@ class ParentViewController: UIViewController {
             .menuHeight(40.0),
             .menuMargin(16),
             .menuItemWidthBasedOnTitleTextWidth(true), // タイトルのテキストに沿って可変するのをONにするかしないか
-            .menuItemWidth(140),
-            .menuItemSeparatorRoundEdges(false),
-            .centerMenuItems(true)
+//            .menuItemWidth(140),
+            .menuItemSeparatorRoundEdges(true),
+            .centerMenuItems(false)
         ]
         
         pageMenu = CAPSPageMenu(viewControllers: controllers,
