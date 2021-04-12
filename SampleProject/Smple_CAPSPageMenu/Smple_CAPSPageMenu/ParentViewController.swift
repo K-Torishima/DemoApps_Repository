@@ -25,21 +25,15 @@ class ParentViewController: UIViewController {
 
 // 同じVCでVCのタイトルだけ変更したい
 extension ParentViewController {
-    
-    
-    
     private func setTitle() {
-        let pageTitles: [String] = ["title1","title2", "title3"]
+        let pageTitles: [String] = ["AAA","BBB", "CCC"]
         let first = FirstViewController()
         var controllers: [UIViewController] = []
         
-        pageTitles.forEach {
-            first.title = $0
+        for item in pageTitles {
+            first.title = item
             controllers.append(first)
         }
-        
-        print(controllers)
-        
         setup(controllers: controllers)
     }
     
