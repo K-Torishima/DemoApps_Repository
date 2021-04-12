@@ -29,11 +29,11 @@ extension ParentViewController {
         let pageTitles: [String] = ["AAA","BBB", "CCC"]
         let first = FirstViewController()
         var controllers: [UIViewController] = []
+
         
-        for item in pageTitles {
-            first.title = item
-            controllers.append(first)
-        }
+        
+        first.title = "タイトルです"
+        controllers.append(first)
         setup(controllers: controllers)
     }
     

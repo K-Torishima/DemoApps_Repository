@@ -9,18 +9,10 @@ import UIKit
 
 final class FirstViewController: UIViewController {
     
-    
-    lazy var testlabel: UILabel = {
-       var label = UILabel()
-        return label
-    }()
-    
-    var num: Int = 0
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        testlabel.text = "\(num)"
         
-        view.backgroundColor = .brown
+        view.backgroundColor = .cyan
+        
     }
 }
