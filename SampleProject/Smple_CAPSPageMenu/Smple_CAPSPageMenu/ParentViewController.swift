@@ -20,20 +20,34 @@ class ParentViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
     }
-    
 }
 
 // 同じVCでVCのタイトルだけ変更したい
 extension ParentViewController {
     private func setTitle() {
-        let pageTitles: [String] = ["AAA","BBB", "CCC"]
-        let first = FirstViewController()
         var controllers: [UIViewController] = []
-
+        let feedArray: [ Dictionary<String, String?> ] =
+            [
+                [
+                    "link" : "http://ajax.googleapis.com/ajax/services/feed/load?v=1.0&q=http://rss.dailynews.yahoo.co.jp/fc/computer/rss.xml&num=10" ,
+                    "title" : "コンピュータ"
+                ],
+                [
+                    "link" : "http://ajax.googleapis.com/ajax/services/feed/load?v=1.0&q=http://rss.dailynews.yahoo.co.jp/fc/world/rss.xml&num=10" ,
+                    "title" : "海外"
+                ],
+                [
+                    "link" : "http://ajax.googleapis.com/ajax/services/feed/load?v=1.0&q=http://rss.dailynews.yahoo.co.jp/fc/local/rss.xml&num=10" ,
+                    "title" : "地域"
+                ]
+            ]
         
-        
-        first.title = "タイトルです"
-        controllers.append(first)
+        // for 文の中でインスタンスかすると、インスタンス化もループするので複製できる
+        for feed in feedArray {
+            let firstController = FirstViewController()
+            firstController.title = feed["title"]!
+            controllers.append(firstController)
+        }
         setup(controllers: controllers)
     }
     
