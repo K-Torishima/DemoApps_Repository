@@ -30,3 +30,60 @@ tama.meow()
 
 
 
+
+class Yan {
+    
+    var result: Any?
+    
+    func fee() -> Any {
+        
+        if isChild() {
+            result = ciledFee()
+        } else if isSenior() {
+            result = seniorFee()
+        } else {
+            result = adultFee()
+        }
+        return result
+    }
+    
+    func fee2() {
+        
+        if isChild() {
+            return ciledFee()
+        } else if isSenior() {
+            return seniorFee()
+        } else {
+            return adultFee()
+        }
+    }
+    
+    
+    func fee3() -> Any {
+        guard isChild() else { return ciledFee() }
+        guard isSenior() else { return seniorFee() }
+        return adultFee()
+    }
+    
+    func ciledFee() {
+        // 子供料金計算
+    }
+    
+    func seniorFee() {
+        // シニア料金計算
+    }
+    
+    func adultFee() {
+        // アダルト料金計算
+    }
+    
+    func isChild() -> Bool {
+        // 仮
+        return false
+    }
+    
+    func isSenior() -> Bool {
+        // 仮
+        return false
+    }
+}
