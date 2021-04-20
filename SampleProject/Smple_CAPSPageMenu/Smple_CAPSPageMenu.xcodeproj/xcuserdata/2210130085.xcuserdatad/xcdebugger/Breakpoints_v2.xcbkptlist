@@ -3,4 +3,102 @@
    uuid = "3B770B78-06F9-4BA2-B977-CB7DD12DBDB6"
    type = "1"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "6763A979-042D-44A9-8C2A-1E92880B275D"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Smple_CAPSPageMenu/MainViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "15"
+            endingLineNumber = "15"
+            landmarkName = "IndexType"
+            landmarkType = "13">
+            <Locations>
+               <Location
+                  uuid = "6763A979-042D-44A9-8C2A-1E92880B275D - 9fc3525c2a332ad3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Smple_CAPSPageMenu.MainViewController.IndexType.init(rawValue: Swift.Int) -&gt; Swift.Optional&lt;Smple_CAPSPageMenu.MainViewController.IndexType&gt;"
+                  moduleName = "Smple_CAPSPageMenu"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/2210130085/MyWorkSpace/Swift_Learning/SampleProject/Smple_CAPSPageMenu/Smple_CAPSPageMenu/MainViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "15"
+                  endingLineNumber = "15"
+                  offsetFromSymbolStart = "82">
+               </Location>
+               <Location
+                  uuid = "6763A979-042D-44A9-8C2A-1E92880B275D - 959a9a9875d38254"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Smple_CAPSPageMenu.MainViewController.IndexType.rawValue.getter : Swift.Int"
+                  moduleName = "Smple_CAPSPageMenu"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/2210130085/MyWorkSpace/Swift_Learning/SampleProject/Smple_CAPSPageMenu/Smple_CAPSPageMenu/MainViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "15"
+                  endingLineNumber = "15"
+                  offsetFromSymbolStart = "65">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "CBF0D289-4655-4402-A1ED-605EE571E494"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Smple_CAPSPageMenu/MainViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "16"
+            endingLineNumber = "16"
+            landmarkName = "IndexType"
+            landmarkType = "13">
+            <Locations>
+               <Location
+                  uuid = "CBF0D289-4655-4402-A1ED-605EE571E494 - 9fc3525c2a332af4"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Smple_CAPSPageMenu.MainViewController.IndexType.init(rawValue: Swift.Int) -&gt; Swift.Optional&lt;Smple_CAPSPageMenu.MainViewController.IndexType&gt;"
+                  moduleName = "Smple_CAPSPageMenu"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/2210130085/MyWorkSpace/Swift_Learning/SampleProject/Smple_CAPSPageMenu/Smple_CAPSPageMenu/MainViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "16"
+                  endingLineNumber = "16"
+                  offsetFromSymbolStart = "102">
+               </Location>
+               <Location
+                  uuid = "CBF0D289-4655-4402-A1ED-605EE571E494 - 959a9a9875d38273"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Smple_CAPSPageMenu.MainViewController.IndexType.rawValue.getter : Swift.Int"
+                  moduleName = "Smple_CAPSPageMenu"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/2210130085/MyWorkSpace/Swift_Learning/SampleProject/Smple_CAPSPageMenu/Smple_CAPSPageMenu/MainViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "16"
+                  endingLineNumber = "16"
+                  offsetFromSymbolStart = "76">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

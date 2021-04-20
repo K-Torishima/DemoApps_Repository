@@ -36,7 +36,7 @@ extension ParentViewController {
         items.forEach { item in
             let controller = FirstViewController()
             controller.title = item.title
-            controller.view.backgroundColor = item.color
+//            controller.collectionView.backgroundColor = item.color
             controllers.append(controller)
         }
         setup(controllers: controllers, pageIndex: pageIndex)
@@ -44,13 +44,13 @@ extension ParentViewController {
     
     private func setup(controllers: [UIViewController], pageIndex: Int) {
         let paramerters: [CAPSPageMenuOption] = [
-            .scrollMenuBackgroundColor(Constants.Color.Base.Background),
-            .viewBackgroundColor(UIColor.white),
-            .selectionIndicatorColor(UIColor.booklogBlue()),
-            .bottomMenuHairlineColor(Constants.Color.Base.Background),
-            .selectedMenuItemLabelColor(UIColor.booklogBlue()),
+            .scrollMenuBackgroundColor(.white),
+            .viewBackgroundColor(.white),
+            .selectionIndicatorColor(.black),
+            .bottomMenuHairlineColor(.white),
+            .selectedMenuItemLabelColor(.black),
             .unselectedMenuItemLabelColor(UIColor.withTrendTabUnselectedColor()),
-            .selectionIndicatorHeight(4.0),
+            .selectionIndicatorHeight(2.0),
             .menuItemFont(UIFont(name: "HiraKakuProN-W6", size: 14.0)!),
             .menuHeight(40.0),
             .menuMargin(16),
@@ -61,7 +61,7 @@ extension ParentViewController {
         ]
         
         pageMenu = CAPSPageMenu(viewControllers: controllers,
-                                frame: CGRect(x: 0, y: 200, width: view.frame.width, height: view.frame.height),
+                                frame: CGRect(x: 0, y: 90, width: view.frame.width, height: view.frame.height),
                                 pageMenuOptions: paramerters)
         pageMenu?.moveToPage(pageIndex)
         view.addSubview(pageMenu!.view)
