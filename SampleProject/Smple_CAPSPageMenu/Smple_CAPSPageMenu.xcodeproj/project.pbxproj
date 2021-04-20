@@ -20,6 +20,7 @@
 		7D065B2C261BFE9400A0C3BD /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D065B2B261BFE9400A0C3BD /* FirstViewController.swift */; };
 		7D065B31261BFEB400A0C3BD /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D065B30261BFEB400A0C3BD /* SecondViewController.swift */; };
 		7D065B36261BFEEC00A0C3BD /* ThirdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D065B35261BFEEC00A0C3BD /* ThirdViewController.swift */; };
+		7D8FE537262EA85A00EF1050 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D8FE536262EA85A00EF1050 /* MainViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +60,7 @@
 		7D065B2B261BFE9400A0C3BD /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
 		7D065B30261BFEB400A0C3BD /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
 		7D065B35261BFEEC00A0C3BD /* ThirdViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThirdViewController.swift; sourceTree = "<group>"; };
+		7D8FE536262EA85A00EF1050 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +115,7 @@
 				7D01C90B261AC0AA0022EDC2 /* SceneDelegate.swift */,
 				7D01C93C261AC0CE0022EDC2 /* CAPSPageMenu.swift */,
 				7D01C90D261AC0AA0022EDC2 /* ParentViewController.swift */,
+				7D8FE536262EA85A00EF1050 /* MainViewController.swift */,
 				7D065B2A261BFE7000A0C3BD /* Controllers */,
 				7D01C90F261AC0AA0022EDC2 /* Main.storyboard */,
 				7D01C912261AC0AD0022EDC2 /* Assets.xcassets */,
@@ -287,6 +290,7 @@
 				7D065B2C261BFE9400A0C3BD /* FirstViewController.swift in Sources */,
 				7D065B31261BFEB400A0C3BD /* SecondViewController.swift in Sources */,
 				7D01C942261AC4AF0022EDC2 /* Color.swift in Sources */,
+				7D8FE537262EA85A00EF1050 /* MainViewController.swift in Sources */,
 				7D065B36261BFEEC00A0C3BD /* ThirdViewController.swift in Sources */,
 				7D01C90C261AC0AA0022EDC2 /* SceneDelegate.swift in Sources */,
 			);
