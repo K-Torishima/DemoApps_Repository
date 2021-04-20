@@ -5,6 +5,16 @@
 //  Created by 鳥嶋 晃次 on 2021/04/05.
 //
 
+struct Item {
+    var title: String
+    var color: UIColor
+    
+    init(title: String, color: UIColor) {
+        self.title = title
+        self.color = color
+    }
+}
+
 import UIKit
 
 class ParentViewController: UIViewController {
@@ -14,7 +24,8 @@ class ParentViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setTitle()
+        setItem()
+//        setTitle()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -23,6 +34,55 @@ class ParentViewController: UIViewController {
 }
 
 // 同じVCでVCのタイトルだけ変更したい
+extension ParentViewController {
+    
+    private func setItem() {
+        var controllers: [UIViewController] = []
+        let items: [Item] = [Item(title: "title1", color: .red),
+                             Item(title: "title2", color: .blue),
+                             Item(title: "title3", color: .gray)]
+        
+        
+        items.forEach { item in
+            let controller = FirstViewController()
+            controller.title = item.title
+            controller.view.backgroundColor = item.color
+            controllers.append(controller)
+        }
+        setup(controllers: controllers)
+    }
+    
+    
+ 
+    
+    private func setup(controllers: [UIViewController]) {
+        let paramerters: [CAPSPageMenuOption] = [
+            .scrollMenuBackgroundColor(Constants.Color.Base.Background),
+            .viewBackgroundColor(UIColor.white),
+            .selectionIndicatorColor(UIColor.booklogBlue()),
+            .bottomMenuHairlineColor(Constants.Color.Base.Background),
+            .selectedMenuItemLabelColor(UIColor.booklogBlue()),
+            .unselectedMenuItemLabelColor(UIColor.withTrendTabUnselectedColor()),
+            .selectionIndicatorHeight(4.0),
+            .menuItemFont(UIFont(name: "HiraKakuProN-W6", size: 14.0)!),
+            .menuHeight(40.0),
+            .menuMargin(16),
+            .menuItemWidthBasedOnTitleTextWidth(false), // タイトルのテキストに沿って可変するのをONにするかしないか
+            //            .menuItemWidth(140),
+            .menuItemSeparatorRoundEdges(true),
+            .centerMenuItems(true)
+        ]
+        
+        pageMenu = CAPSPageMenu(viewControllers: controllers,
+                                frame: CGRect(x: 0, y: 100, width: view.frame.width, height: view.frame.height),
+                                pageMenuOptions: paramerters)
+        pageMenu?.moveToPage(1)
+        view.addSubview(pageMenu!.view)
+        view.sendSubviewToBack(pageMenu!.view)
+    }
+}
+
+// 複数VCがある状態
 extension ParentViewController {
     private func setTitle() {
         var controllers: [UIViewController] = []
@@ -50,38 +110,6 @@ extension ParentViewController {
         }
         setup(controllers: controllers)
     }
-    
-    private func setup(controllers: [UIViewController]) {
-        let paramerters: [CAPSPageMenuOption] = [
-            .scrollMenuBackgroundColor(Constants.Color.Base.Background),
-            .viewBackgroundColor(UIColor.white),
-            .selectionIndicatorColor(UIColor.booklogBlue()),
-            .bottomMenuHairlineColor(Constants.Color.Base.Background),
-            .selectedMenuItemLabelColor(UIColor.booklogBlue()),
-            .unselectedMenuItemLabelColor(UIColor.withTrendTabUnselectedColor()),
-            .selectionIndicatorHeight(4.0),
-            .menuItemFont(UIFont(name: "HiraKakuProN-W6", size: 14.0)!),
-            .menuHeight(40.0),
-            .menuMargin(16),
-            .menuItemWidthBasedOnTitleTextWidth(false), // タイトルのテキストに沿って可変するのをONにするかしないか
-            //            .menuItemWidth(140),
-            .menuItemSeparatorRoundEdges(true),
-            .centerMenuItems(true)
-        ]
-        
-        pageMenu = CAPSPageMenu(viewControllers: controllers,
-                                frame: CGRect(x: 0, y: 100, width: view.frame.width, height: view.frame.height),
-                                pageMenuOptions: paramerters)
-        
-        view.addSubview(pageMenu!.view)
-        view.sendSubviewToBack(pageMenu!.view)
-    }
-}
-
-// 複数VCがある状態
-extension ParentViewController {
-    
-//    let firstVC = FirstViewController()
 //    let secondVC = SecondViewContoroller()
 //    let thirdVC = ThirdViewController()
     
