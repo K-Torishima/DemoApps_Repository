@@ -4,15 +4,24 @@ import PlaygroundSupport
 // https://thehappyprogrammer.com/custom-buttons-in-swiftui/
 
 struct ContentView: View {
+    
+    @State private var fav = false
+
     var body: some View {
-        VStack {
-            Text("Hello")
-                .font(.largeTitle)
-                .foregroundColor(.primary)
-            Text("world")
-                .font(.title)
-                .foregroundColor(.secondary)
-        }
+        ZStack {
+            Button(action: {
+                self.fav.toggle()
+            }) {
+                HStack {
+                    Image(systemName: fav ? "star.fill" : "star")
+                        .foregroundColor(fav ? Color.yellow : Color.gray)
+                    Text("fav")
+                        .foregroundColor(Color.black)
+                }
+            }
+            .buttonStyle(GradientBackgroundStyle(startColor: Color.pink, endColor: Color.purple))
+            .padding()
+        }.ignoresSafeArea()
     }
 }
 
@@ -23,6 +32,17 @@ struct GradientBackgroundStyle: ButtonStyle {
     var startColor: Color
     var endColor: Color
     
-    
-    
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .frame(maxWidth: .infinity)
+            .padding()
+            .foregroundColor(.white)
+            .background(LinearGradient(gradient: Gradient(colors: [startColor, endColor]),
+                                       startPoint: .leading, endPoint: .trailing)
+                            .opacity(configuration.isPressed ? 0.5 : 1))
+            .cornerRadius(40)
+            .padding(.horizontal, 20)
+            .shadow(radius: 10)
+    }
 }
+
