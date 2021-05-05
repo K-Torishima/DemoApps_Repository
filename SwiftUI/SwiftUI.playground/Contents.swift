@@ -5,23 +5,41 @@ import PlaygroundSupport
 
 struct ContentView: View {
     
-    @State private var fav = false
-
+    @State private var fav1 = false
+    @State private var fav2 = false
+    
     var body: some View {
-        ZStack {
-            Button(action: {
-                self.fav.toggle()
-            }) {
-                HStack {
-                    Image(systemName: fav ? "star.fill" : "star")
-                        .foregroundColor(fav ? Color.yellow : Color.gray)
-                    Text("いいね")
-                        .foregroundColor(Color.black)
+        VStack {
+            ZStack {
+                Button(action: {
+                    self.fav1.toggle()
+                }) {
+                    HStack {
+                        Image(systemName: fav1 ? "star.fill" : "star")
+                            .foregroundColor(fav1 ? Color.yellow : Color.gray)
+                        Text("いいね1")
+                            .foregroundColor(Color.white)
+                    }
                 }
-            }
-            .buttonStyle(GradientBackgroundStyle(startColor: Color.pink, endColor: Color.purple))
-            .padding()
-        }.ignoresSafeArea()
+                .buttonStyle(GradientBackgroundStyle(startColor: Color.orange, endColor: Color.purple))
+                .padding()
+            }.ignoresSafeArea()
+            
+            ZStack {
+                Button(action: {
+                    self.fav2.toggle()
+                }) {
+                    HStack {
+                        Image(systemName: fav2 ? "star.fill" : "star")
+                            .foregroundColor(fav2 ? Color.yellow : Color.gray)
+                        Text("いいね2")
+                            .foregroundColor(Color.white)
+                    }
+                }
+                .buttonStyle(GradientBackgroundStyle(startColor: Color.orange, endColor: Color.purple))
+                .padding()
+            }.ignoresSafeArea()
+        }
     }
 }
 
