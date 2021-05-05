@@ -15,7 +15,7 @@ struct ContentView: View {
                 HStack {
                     Image(systemName: fav ? "star.fill" : "star")
                         .foregroundColor(fav ? Color.yellow : Color.gray)
-                    Text("fav")
+                    Text("いいね")
                         .foregroundColor(Color.black)
                 }
             }
