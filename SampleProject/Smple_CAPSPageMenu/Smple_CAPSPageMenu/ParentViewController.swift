@@ -63,6 +63,7 @@ extension ParentViewController {
         pageMenu = CAPSPageMenu(viewControllers: controllers,
                                 frame: CGRect(x: 0, y: 90, width: view.frame.width, height: view.frame.height),
                                 pageMenuOptions: paramerters)
+        pageMenu?.moveSelectionIndicator(pageIndex)
         pageMenu?.moveToPage(pageIndex)
         view.addSubview(pageMenu!.view)
         view.sendSubviewToBack(pageMenu!.view)
