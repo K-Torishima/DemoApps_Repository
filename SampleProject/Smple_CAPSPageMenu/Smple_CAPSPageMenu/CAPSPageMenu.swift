@@ -879,13 +879,16 @@ open class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecogn
                 pagesAddedDictionary[lastPageIndex] = lastPageIndex
             }
             
-            // Move controller scroll view when tapping menu item
-            let duration : Double = Double(scrollAnimationDurationOnMenuItemTap) / Double(1000)
+            let xOffset : CGFloat = CGFloat(index) * self.controllerScrollView.frame.width
+            self.controllerScrollView.setContentOffset(CGPoint(x: xOffset, y: self.controllerScrollView.contentOffset.y), animated: false)
             
-            UIView.animate(withDuration: duration, animations: { () -> Void in
-                let xOffset : CGFloat = CGFloat(index) * self.controllerScrollView.frame.width
-                self.controllerScrollView.setContentOffset(CGPoint(x: xOffset, y: self.controllerScrollView.contentOffset.y), animated: false)
-            })
+            // Move controller scroll view when tapping menu item
+//            let duration : Double = Double(scrollAnimationDurationOnMenuItemTap) / Double(1000)
+//
+//            UIView.animate(withDuration: duration, animations: { () -> Void in
+//                let xOffset : CGFloat = CGFloat(index) * self.controllerScrollView.frame.width
+//                self.controllerScrollView.setContentOffset(CGPoint(x: xOffset, y: self.controllerScrollView.contentOffset.y), animated: false)
+//            })
         }
     }
 }
