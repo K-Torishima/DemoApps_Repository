@@ -10,6 +10,7 @@ import UIKit
 class ViewController: UIViewController {
     
     var flotingButton = FlotingButton()
+    var isBool: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,7 +40,14 @@ class ViewController: UIViewController {
     }
     
     @objc func tappedEditButton() {
-        print("tap")
+        
+        if !isBool {
+            isBool = true
+            print(isBool)
+        } else {
+            isBool = false
+            print(isBool)
+        }
     }
 }
 
