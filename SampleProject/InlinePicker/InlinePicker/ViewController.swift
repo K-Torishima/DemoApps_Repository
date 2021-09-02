@@ -11,7 +11,8 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     private var showingDatePicker = false
-    private var pickerCell: PickerCell?
+    private var pickerCell1: PickerCell?
+    private var pickerCell2: PickerCell?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,48 +22,66 @@ class ViewController: UIViewController {
         tableView.register(nib1, forCellReuseIdentifier: "NormalCell")
         let nib2 = UINib(nibName: "PickerCell", bundle: nil)
         tableView.register(nib2, forCellReuseIdentifier: "PickerCell")
-        
     }
 }
 
 
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return (section == 1) ? 1 : 3
+        return 3
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == 1 {
+        switch indexPath.row {
+        case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: "PickerCell", for: indexPath)
-            pickerCell = cell as? PickerCell
+            pickerCell1 = cell as? PickerCell
             return cell
+        case 1:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "NormalCell", for: indexPath) as! NormalCell
+            cell.titleLabel.text = "\(indexPath.section)-\(indexPath.row)"
+            return cell
+        case 2:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "PickerCell", for: indexPath)
+            pickerCell2 = cell as? PickerCell
+            return cell
+        default:
+            return UITableViewCell()
         }
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: "NormalCell", for: indexPath) as! NormalCell
-        cell.titleLabel.text = "\(indexPath.section)-\(indexPath.row)"
-        return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        guard indexPath.section == 1 else {
-            return
-        }
-        
-        tableView.performBatchUpdates {
-            if self.showingDatePicker {
-                pickerCell?.hidePicker()
-            } else {
-                pickerCell?.showPicker()
+        switch indexPath.row {
+        case 0:
+            tableView.performBatchUpdates {
+                if self.showingDatePicker {
+                    pickerCell1?.hidePicker()
+                } else {
+                    pickerCell1?.showPicker()
+                }
+            } completion: { _ in
+                self.showingDatePicker.toggle()
             }
-        } completion: { _ in
-            self.showingDatePicker.toggle()
+        case 1:
+            break
+        case 2:
+            tableView.performBatchUpdates {
+                if self.showingDatePicker {
+                    pickerCell2?.hidePicker()
+                } else {
+                    pickerCell2?.showPicker()
+                }
+            } completion: { _ in
+                self.showingDatePicker.toggle()
+            }
+        default:
+            break
         }
-
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
