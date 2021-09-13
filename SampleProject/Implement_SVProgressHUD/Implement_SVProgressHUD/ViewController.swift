@@ -14,7 +14,6 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         SVProgressHUD.show()
-        SVProgressHUD.setViewForExtension(self.view)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
             SVProgressHUD.dismiss()
