@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -13,6 +13,7 @@
 		7D77635526EFD73A006E5974 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7D77635326EFD73A006E5974 /* Main.storyboard */; };
 		7D77635726EFD73B006E5974 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7D77635626EFD73B006E5974 /* Assets.xcassets */; };
 		7D77635A26EFD73B006E5974 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7D77635826EFD73B006E5974 /* LaunchScreen.storyboard */; };
+		7D77636426EFE8CC006E5974 /* Ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D77636326EFE8CC006E5974 /* Ex.swift */; };
 		90D827C715AEA1A9E65FCAB2 /* Pods_Implement_SVProgressHUD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C316769F0E6CF325330DFD3 /* Pods_Implement_SVProgressHUD.framework */; };
 /* End PBXBuildFile section */
 
@@ -27,6 +28,7 @@
 		7D77635626EFD73B006E5974 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7D77635926EFD73B006E5974 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7D77635B26EFD73B006E5974 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7D77636326EFE8CC006E5974 /* Ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ex.swift; sourceTree = "<group>"; };
 		A9045E1A144219E9EBA8E7AD /* Pods-Implement_SVProgressHUD.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Implement_SVProgressHUD.debug.xcconfig"; path = "Target Support Files/Pods-Implement_SVProgressHUD/Pods-Implement_SVProgressHUD.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -48,7 +50,6 @@
 				A9045E1A144219E9EBA8E7AD /* Pods-Implement_SVProgressHUD.debug.xcconfig */,
 				63E845B102FE17841C01BE02 /* Pods-Implement_SVProgressHUD.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -88,6 +89,7 @@
 				7D77635626EFD73B006E5974 /* Assets.xcassets */,
 				7D77635826EFD73B006E5974 /* LaunchScreen.storyboard */,
 				7D77635B26EFD73B006E5974 /* Info.plist */,
+				7D77636326EFE8CC006E5974 /* Ex.swift */,
 			);
 			path = Implement_SVProgressHUD;
 			sourceTree = "<group>";
@@ -206,6 +208,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7D77636426EFE8CC006E5974 /* Ex.swift in Sources */,
 				7D77635226EFD73A006E5974 /* ViewController.swift in Sources */,
 				7D77634E26EFD73A006E5974 /* AppDelegate.swift in Sources */,
 				7D77635026EFD73A006E5974 /* SceneDelegate.swift in Sources */,

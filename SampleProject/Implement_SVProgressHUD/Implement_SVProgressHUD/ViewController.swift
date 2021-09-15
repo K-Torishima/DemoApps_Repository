@@ -13,7 +13,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // サイクルの色
-        set()
+        //set()
         SVProgressHUD.show()
         DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
             SVProgressHUD.dismiss()
